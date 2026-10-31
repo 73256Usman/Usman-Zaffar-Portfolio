@@ -32,8 +32,9 @@
   --accent-soft: rgba(168, 227, 214, 0.1);
 }
 
+html.ready { scroll-behavior: smooth; }
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
+html { scroll-padding-top: calc(var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--bg);
@@ -131,7 +132,7 @@ h1, h2, h3, p, dd { margin: 0; }
 
 /* Hero */
 .hero { position: relative; min-height: 100svh; padding: calc(var(--header-h) + 40px) 0 80px; display: flex; align-items: center; overflow: hidden; border-bottom: 1px solid var(--line); }
-#scene, .hero-fallback { position: absolute; right: -2%; top: 46%; width: min(760px, 62vw); aspect-ratio: 1; transform: translateY(-50%); z-index: 0; }
+#scene, .hero-fallback { pointer-events: none; position: absolute; right: -2%; top: 46%; width: min(760px, 62vw); aspect-ratio: 1; transform: translateY(-50%); z-index: 0; }
 .hero-fallback {
   display: none; border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 60%), radial-gradient(circle at 60% 70%, rgba(255,255,255,0.08), transparent 55%);
@@ -336,8 +337,8 @@ h2 { font-size: clamp(36px, 5.6vw, 68px); font-weight: 500; letter-spacing: -0.0
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 /* Reveal on scroll */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
-.reveal.in { opacity: 1; transform: none; }
+.js-reveal .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+.js-reveal .reveal.in { opacity: 1; transform: none; }
 .swap { animation: swap 0.5s var(--ease); }
 @keyframes swap { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
@@ -372,7 +373,7 @@ h2 { font-size: clamp(36px, 5.6vw, 68px); font-weight: 500; letter-spacing: -0.0
   .flow li { font-size: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html.ready { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
-  .reveal { opacity: 1; transform: none; }
+  .js-reveal .reveal { opacity: 1; transform: none; }
 }

@@ -27,6 +27,10 @@ Put your two PDFs in the `resume/` folder with these exact names:
 
 The download buttons show up on their own once the files are there.
 
+## Before every push
+
+Run `bash bump-version.sh` once before you commit. It changes the version tag on the site files so visitors' browsers fetch the newest scripts and styles instead of an old cached copy.
+
 ## Run it locally
 
 Modules need a web server, so opening the file directly will not work.

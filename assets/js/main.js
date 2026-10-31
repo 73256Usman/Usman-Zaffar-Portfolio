@@ -1,10 +1,11 @@
 import {
   profile, tracks, projects, filters, toolkit, methods, toolFilters,
   experience, education, bio, aboutTitle, credentials,
-} from "./data.js";
-import { initScene } from "./scene.js";
+} from "./data.js?v=202610311813";
+import { initScene } from "./scene.js?v=202610311813";
 
-const $ = (s, r = document) => r.querySelector(s);
+const ghost = document.createElement("div"); // stands in for any element missing from the HTML, so one mismatch can never blank the page
+const $ = (s, r = document) => r.querySelector(s) || ghost;
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const root = document.documentElement;
 
@@ -46,15 +47,16 @@ function initLinks() {
 
 /* ---------- resume files (buttons appear only if the PDFs exist) ---------- */
 const resumeOk = { cyber: false, it: false };
-async function probeResumes() {
-  await Promise.all(Object.entries(profile.resumes).map(async ([k, url]) => {
-    try {
-      const r = await fetch(url, { method: "HEAD", cache: "no-store" });
-      const type = r.headers.get("content-type") || "";
-      resumeOk[k] = r.ok && !type.includes("text/html");
-    } catch { resumeOk[k] = false; }
-  }));
-  renderResume();
+const probed = {};
+async function probeResume(k) {
+  if (probed[k]) return;
+  probed[k] = true;
+  try {
+    const r = await fetch(profile.resumes[k], { method: "HEAD" });
+    const type = r.headers.get("content-type") || "";
+    resumeOk[k] = r.ok && !type.includes("text/html");
+  } catch { resumeOk[k] = false; }
+  if (k === state.track) renderResume();
 }
 function renderResume() {
   const url = profile.resumes[state.track];
@@ -205,6 +207,7 @@ function setTrack(next, { initial = false } = {}) {
   state.openCard = null;
   renderHero(); renderFilters(); renderWork(); renderCaps(); renderToolFilters();
   renderTools(); renderExperience(); renderAbout(); renderContact(); renderResume();
+  probeResume(next);
   window.dispatchEvent(new CustomEvent("trackchange", { detail: next }));
   if (!initial) {
     const url = new URL(location.href);
@@ -285,7 +288,10 @@ function bindEvents() {
     const open = nav.classList.toggle("open");
     menuBtn.setAttribute("aria-expanded", String(open));
   });
-  nav.addEventListener("click", (e) => { if (e.target.closest("a")) { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); } });
+  const closeMenu = () => { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); };
+  nav.addEventListener("click", (e) => { if (e.target.closest("a")) closeMenu(); });
+  addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
+  document.addEventListener("click", (e) => { if (nav.classList.contains("open") && !e.target.closest("#nav, #menuBtn")) closeMenu(); });
 
   const header = $("#header");
   const onScroll = () => header.classList.toggle("scrolled", scrollY > 8);
@@ -309,19 +315,31 @@ function bindEvents() {
 
 /* ---------- reveal ---------- */
 function initReveal() {
+  if (!("IntersectionObserver" in window)) return; // content simply stays visible
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.08 });
   $$(".reveal").forEach((el) => io.observe(el));
+  root.classList.add("js-reveal");
+  // safety net: never leave content hidden
+  setTimeout(() => $$(".reveal:not(.in)").forEach((el) => { if (el.getBoundingClientRect().top < innerHeight * 1.5) el.classList.add("in"); }), 2500);
 }
 
 /* ---------- boot ---------- */
-initLinks();
-renderCreds();
+function safe(label, fn) { try { fn(); } catch (err) { console.error(`[portfolio] ${label} failed:`, err); } }
+
+safe("links", initLinks);
+safe("credentials", renderCreds);
 const urlTrack = new URLSearchParams(location.search).get("track");
-setTrack(tracks[urlTrack] ? urlTrack : store.get("track") || "cyber", { initial: true });
-bindEvents();
-initPalette();
-initReveal();
-probeResumes();
-initScene($("#scene"), $("#heroFallback"), $(".hero"));
+safe("content", () => setTrack(tracks[urlTrack] ? urlTrack : store.get("track") || "cyber", { initial: true }));
+safe("events", bindEvents);
+safe("palette", initPalette);
+safe("reveal", initReveal);
+
+// smooth scrolling only after load, so a refresh never animates the page
+addEventListener("load", () => setTimeout(() => root.classList.add("ready"), 400));
+
+// the 3D scene is decoration: load it after the content has painted
+const startScene = () => initScene($("#scene"), $("#heroFallback"), $(".hero"));
+if ("requestIdleCallback" in window) requestIdleCallback(startScene, { timeout: 1500 });
+else setTimeout(startScene, 400);

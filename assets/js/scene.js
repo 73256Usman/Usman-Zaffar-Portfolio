@@ -201,6 +201,13 @@ export async function initScene(canvas, fallback, hero) {
     new IntersectionObserver(([en]) => { visible = en.isIntersecting; resume(); }).observe(hero);
     document.addEventListener("visibilitychange", () => { visible = !document.hidden; resume(); });
     canvas.addEventListener("webglcontextlost", (e) => { e.preventDefault(); fail(); });
+    applyTrack(document.documentElement.dataset.track); // in case the visitor switched views while this was loading
+
+    // release the GPU context on refresh or navigation, so many quick reloads cannot exhaust the browser's limit
+    addEventListener("pagehide", () => {
+      cancelAnimationFrame(raf); visible = false;
+      try { renderer.dispose(); renderer.forceContextLoss(); } catch { /* already gone */ }
+    });
   } catch (err) {
     console.warn("3D scene disabled:", err);
     fail();
