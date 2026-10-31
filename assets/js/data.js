@@ -6,7 +6,14 @@ export const profile = {
   email: "732.usman@gmail.com",
   location: "Edison, NJ",
   intro:
-    "Information Technology senior at NJIT with Security+, real security operations experience and hands-on IT support. I build labs, fix real problems, and write up what I find.",
+    "NJIT Information Technology senior with CompTIA Security+, nearly two years in security operations, and hands-on IT support experience.",
+  badge: "Open to work · Edison, NJ",
+  facts: [
+    ["EDUCATION", "B.S. Information Technology", "NJIT · 3.8 GPA · Summer 2027"],
+    ["CERTIFICATION", "CompTIA Security+", "Earned"],
+    ["SECURITY", "Security Operations Analyst", "Metro One · 2023 to 2025"],
+    ["IT SUPPORT", "Level 2 IT Technician", "Geeks On Site · Current"],
+  ],
   contactLine:
     "Open to SOC analyst, security analyst, help desk and IT support roles.",
   github: "https://github.com/73256Usman",
@@ -30,34 +37,31 @@ export const tracks = {
     ],
     badge: "NJIT B.S. Information Technology · Class of 2027 · Security+",
     strip: ["SOC", "BLUE TEAM", "VULN MGMT", "AI SECURITY"],
-    workTitle: "Labs. Evidence. Detections.",
+    workTitle: "Security projects and labs.",
     workIntro:
-      "Home labs, coursework and research. Each one shows the setup, what I did and the tools involved.",
+      "Hands-on work that shows how I approach security and IT problems. Select a card for details.",
     capTitle: "The security cycle.",
-    capIntro: "Good security work is a loop, not a checklist. This is how I approach each pass through it.",
+    capIntro: "A repeatable process for every incident.",
     cycle: ["Detect", "Triage", "Investigate", "Contain", "Recover", "Improve"],
     caps: [
       {
         n: "01",
         title: "Detect and triage",
-        text: "Collect the signal, separate noise from real threats, and rank what needs attention first.",
-        tags: ["Monitoring", "Log analysis", "Alert triage", "Threat hunting"],
+        text: "Find real threats in the noise and prioritize them.",
       },
       {
         n: "02",
         title: "Investigate and respond",
-        text: "Scope the incident, contain it, keep the evidence intact, and document every step taken.",
-        tags: ["Incident response", "Phishing analysis", "Containment", "Reporting"],
+        text: "Scope the issue, contain it, and document every step.",
       },
       {
         n: "03",
         title: "Harden and verify",
-        text: "Fix the root cause, tighten the controls, then retest to prove the fix actually worked.",
-        tags: ["Vulnerability management", "Remediation", "Hardening", "Retesting"],
+        text: "Fix the root cause, then retest to confirm.",
       },
     ],
-    expTitle: "Operations. Support. Delivery.",
-    contactTitle: "Let's talk security.",
+    expTitle: "Work experience.",
+    contactTitle: "Let's connect.",
   },
   it: {
     label: "IT",
@@ -70,34 +74,31 @@ export const tracks = {
     ],
     badge: "NJIT B.S. Information Technology · Class of 2027 · Security+",
     strip: ["HELP DESK", "WINDOWS", "MACOS", "ACTIVE DIRECTORY"],
-    workTitle: "Systems. Fixes. Automation.",
+    workTitle: "IT projects and labs.",
     workIntro:
-      "Home labs, client work and apps I have shipped. Each one shows the setup, what I did and the tools involved.",
+      "Hands-on work that shows how I approach security and IT problems. Select a card for details.",
     capTitle: "The support cycle.",
-    capIntro: "Good IT work follows a repeatable loop. This is the process I follow on every request, from first contact to final notes.",
+    capIntro: "A repeatable process for every request.",
     cycle: ["Intake", "Diagnose", "Resolve", "Verify", "Document", "Prevent"],
     caps: [
       {
         n: "01",
         title: "Intake and diagnose",
-        text: "Capture the problem clearly, reproduce it, and find the root cause before changing anything.",
-        tags: ["Troubleshooting", "Root cause", "Reproducing issues"],
+        text: "Understand the issue and find the root cause.",
       },
       {
         n: "02",
         title: "Resolve and restore",
-        text: "Apply the fix, confirm it works for the user, and get them back to productive work.",
-        tags: ["Remediation", "Windows", "macOS", "User support"],
+        text: "Fix it and confirm the user is back to work.",
       },
       {
         n: "03",
         title: "Document and prevent",
-        text: "Write down what happened, update procedures, and automate the issues that keep coming back.",
-        tags: ["Documentation", "SOPs", "Automation"],
+        text: "Record the fix and automate repeat issues.",
       },
     ],
-    expTitle: "Support. Systems. Shipping.",
-    contactTitle: "Let's get to work.",
+    expTitle: "Work experience.",
+    contactTitle: "Let's connect.",
   },
 };
 
@@ -318,24 +319,27 @@ export const toolkit = [
 
 export const methods = {
   cyber: [
-    "MFA",
-    "SSO",
-    "SAML",
-    "OAuth",
-    "CVE / CVSS",
-    "NIST framework",
-    "OWASP",
-    "Phishing analysis",
+    "Security monitoring",
     "Incident response",
-    "Log analysis",
-    "Risk assessment",
+    "SIEM and log analysis",
+    "Phishing analysis",
+    "Vulnerability management",
+    "Threat hunting",
+    "Active Directory",
+    "MFA and SSO",
+    "NIST and OWASP",
+    "Report writing",
   ],
   it: [
+    "Help desk and desktop support",
+    "Windows and macOS troubleshooting",
+    "Active Directory and Group Policy",
+    "Microsoft 365 and Intune",
+    "OS imaging",
+    "Asset tracking",
+    "Malware removal",
+    "Scripting and automation",
     "Documentation and SOPs",
-    "Root cause troubleshooting",
-    "Account and access management",
-    "Endpoint management",
-    "Client communication",
   ],
 };
 
@@ -354,9 +358,9 @@ export const experience = [
     place: "Client sites",
     stat: ["4 to 5", "on-call jobs per week"],
     bullets: [
-      "Complete 4 to 5 on-call service jobs a week for Windows and macOS clients.",
-      "Handle virus and malware removal, OS installs and general troubleshooting.",
-      "Work independently as a Level 2 technician across a mix of client environments.",
+      "Resolve 4 to 5 on-call service jobs a week for Windows and macOS clients.",
+      "Remove viruses and malware, install operating systems, and troubleshoot issues.",
+      "Work independently across a variety of client environments.",
     ],
   },
   {
@@ -368,23 +372,8 @@ export const experience = [
     place: "Independent",
     stat: ["Multiple", "apps published"],
     bullets: [
-      "Design, build and publish iOS apps on my own.",
-      "Maintain the apps and ship updates.",
-      "Use Git and AI coding tools daily.",
-    ],
-  },
-  {
-    id: "mastercard",
-    dates: "Nov 2025",
-    kind: "Virtual job simulation · Forage",
-    role: "Cybersecurity Analyst Simulation",
-    org: "Mastercard",
-    place: "Online",
-    stat: ["M365", "phishing analysis"],
-    bullets: [
-      "Completed the Mastercard cybersecurity analyst job simulation on Forage.",
-      "Analyzed malicious emails and simulations, spotting spoofed senders and risky user behavior.",
-      "Investigated compromised accounts and recommended containment such as credential resets and access reviews.",
+      "Design, build and publish iOS apps independently.",
+      "Maintain the apps and release updates.",
     ],
   },
   {
@@ -396,10 +385,23 @@ export const experience = [
     place: "Edison, NJ · Amazon warehouse site",
     stat: ["150+", "access events per shift"],
     bullets: [
-      "Monitored 150+ access events per shift across 4 entry points, including high risk vendor lanes, for a site of 200+ employees.",
-      "Investigated incidents using system activity, access logs and surveillance data, wrote detailed reports, and escalated unusual activity following incident response procedures.",
-      "Monitored physical security systems that run on IT infrastructure.",
-      "Kept policy compliance on track through documentation and system reviews, and trained new analysts on tools and SOPs.",
+      "Monitored 150+ access events per shift across 4 entry points for a site of 200+ employees.",
+      "Investigated incidents using logs and surveillance data, wrote detailed reports, and escalated unusual activity per incident response procedures.",
+      "Trained new analysts on tools and SOPs and kept documentation current.",
+    ],
+  },
+  {
+    id: "mastercard",
+    dates: "Nov 2025",
+    kind: "Virtual job simulation · Forage",
+    role: "Cybersecurity Analyst Simulation",
+    org: "Mastercard",
+    place: "Online",
+    stat: ["Phishing", "analysis and response"],
+    bullets: [
+      "Completed Mastercard's cybersecurity analyst job simulation.",
+      "Analyzed phishing emails and identified spoofed senders and risky user behavior.",
+      "Recommended containment steps such as credential resets and access reviews.",
     ],
   },
 ];
@@ -428,12 +430,11 @@ export const skillGroups = [
   ["Automation and development", "Python, PowerShell, cron jobs, Git, iOS development"],
 ];
 
-export const aboutTitle = "Both sides of the system.";
+export const aboutTitle = "About me.";
 
 export const bio = [
-  "I am a senior at NJIT studying Information Technology, with concentrations in Cybersecurity, Network and Information Systems, and Database Management. I hold CompTIA Security+ and plan to add Azure Fundamentals next.",
-  "My work history covers both sides. I spent nearly two years in security operations at a warehouse site in Edison, watching access events and writing up incidents. Today I work on call as a Level 2 technician for Geeks On Site, fixing Windows and macOS problems for clients, and I build and publish my own iOS apps.",
-  "Outside of work I build labs: a Windows domain, Wazuh monitoring, Nessus scans, and an AI agent security project I am working on now. Having both backgrounds is the point. Knowing how a system is supposed to work makes it easier to see when something is wrong.",
+  "I am a senior at NJIT studying Information Technology, and I hold CompTIA Security+. I have worked in both security operations and hands-on IT support, and I enjoy roles that let me use both.",
+  "At Metro One I monitored access and investigated incidents for a busy warehouse site. Today I work on call as a Level 2 technician and build my own iOS apps. At home I run labs covering Active Directory, Wazuh, Nessus and AI agent security.",
 ];
 
 export const credentials = [

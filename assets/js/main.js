@@ -1,6 +1,6 @@
 import {
   profile, tracks, projects, filters, toolkit, methods, toolFilters,
-  experience, education, skillGroups, bio, aboutTitle, credentials, labsList,
+  experience, education, bio, aboutTitle, credentials,
 } from "./data.js";
 import { initScene } from "./scene.js";
 
@@ -80,10 +80,11 @@ function renderHero() {
   $("#promptText").textContent = t.prompt;
   $("#tagline").textContent = t.tagline;
   $("#intro").textContent = profile.intro;
-  $("#badge").textContent = t.badge;
-  $("#pillars").innerHTML = t.pillars.map(([a, b]) => `<li><span>${esc(a)}</span><p>${esc(b)}</p></li>`).join("");
-  $("#strip").innerHTML = t.strip.map((s) => `<li>${esc(s)}</li>`).join("");
-  ["#tagline", "#pillars", "#strip"].forEach((s) => swapAnim($(s)));
+  $("#badge").textContent = profile.badge;
+  $("#facts").innerHTML = profile.facts.map(([k, a, b]) =>
+    `<li><span class="fact-k mono">${esc(k)}</span><b>${esc(a)}</b><span class="fact-s">${esc(b)}</span></li>`).join("");
+  $("#strip").innerHTML = t.strip.map((x) => `<li>${esc(x)}</li>`).join("");
+  ["#tagline", "#strip"].forEach((x) => swapAnim($(x)));
 }
 
 /* ---------- work ---------- */
@@ -127,8 +128,7 @@ function renderCaps() {
   $("#capIntro").textContent = t.capIntro;
   $("#cycle").innerHTML = t.cycle.map((c, i) => `<li><span>0${i + 1}</span>${esc(c)}</li>`).join("");
   $("#caps").innerHTML = t.caps.map((c) => `
-    <div class="col"><span class="n">${esc(c.n)}</span><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p>
-    <ul class="tags">${c.tags.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
+    <div class="col"><span class="n">${esc(c.n)}</span><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p></div>`).join("");
   swapAnim($("#caps")); swapAnim($("#cycle"));
 }
 
@@ -176,20 +176,18 @@ function renderExperience() {
 function renderAbout() {
   $("#aboutTitle").textContent = aboutTitle;
   $("#bio").innerHTML = bio.map((p) => `<p>${esc(p)}</p>`).join("");
-  $("#education").innerHTML = education.map((e) => `
-    <li><b>${esc(e.degree)}</b><p class="school">${esc(e.school)}</p><p class="note">${esc(e.note)}</p>
-    <div class="row"><span class="pill on">${esc(e.dates)}</span>${e.extra ? `<span class="pill">${esc(e.extra)}</span>` : ""}</div></li>`).join("");
-  $("#skills").innerHTML = skillGroups.map(([a, b]) => `<div><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join("");
 }
 
-/* ---------- credentials + contact ---------- */
+/* ---------- education + certifications ---------- */
 function renderCreds() {
+  $("#education").innerHTML = education.map((e) => `
+    <li class="reveal"><b>${esc(e.degree)}</b><p class="school">${esc(e.school)}</p><p class="note">${esc(e.note)}</p>
+    <div class="row"><span class="pill on">${esc(e.dates)}</span>${e.extra ? `<span class="pill">${esc(e.extra)}</span>` : ""}</div></li>`).join("");
   $("#creds").innerHTML = credentials.map((c) => `
-    <div class="cred reveal in">
+    <div class="cred reveal">
       <div class="cred-top"><span class="cred-issuer">${esc(c.issuer.toUpperCase())}</span><span class="pill ${c.earned ? "on" : ""}">${esc(c.status)}</span></div>
       <h3>${esc(c.name)}</h3><p class="cred-area">${esc(c.area)}</p>
     </div>`).join("");
-  $("#labs").innerHTML = labsList.map((l) => `<li>${esc(l)}</li>`).join("");
 }
 function renderContact() {
   const t = tracks[state.track];
@@ -220,7 +218,7 @@ function setTrack(next, { initial = false } = {}) {
 function initPalette() {
   const pal = $("#palette"), input = $("#paletteInput"), list = $("#paletteList");
   let items = [], sel = 0, lastFocus = null;
-  const sections = [["Work", "#work"], ["Toolkit", "#toolkit"], ["Experience", "#experience"], ["About", "#about"], ["Credentials", "#credentials"], ["Contact", "#contact"]];
+  const sections = [["Experience", "#experience"], ["Education and certifications", "#credentials"], ["Skills and tools", "#toolkit"], ["Projects and labs", "#work"], ["How I work", "#capabilities"], ["About", "#about"], ["Contact", "#contact"]];
   function build(q) {
     q = q.trim().toLowerCase();
     items = [
@@ -281,7 +279,6 @@ function bindEvents() {
     const b = e.target.closest("[data-f]"); if (!b) return;
     state.toolFilter = b.dataset.f; renderToolFilters(); renderTools();
   });
-  $("#toolSearch").addEventListener("input", (e) => { state.toolQuery = e.target.value; renderTools(); });
 
   const menuBtn = $("#menuBtn"), nav = $("#nav");
   menuBtn.addEventListener("click", () => {
@@ -301,7 +298,7 @@ function bindEvents() {
       if (en.isIntersecting) links.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === `#${en.target.id}`));
     });
   }, { rootMargin: "-45% 0px -50% 0px" });
-  ["work", "toolkit", "experience", "about", "credentials", "contact"].forEach((id) => spy.observe($(`#${id}`)));
+  ["experience", "credentials", "toolkit", "work", "about", "contact"].forEach((id) => spy.observe($(`#${id}`)));
 
   // cursor glow (fine pointers only)
   const glow = $("#glow");
