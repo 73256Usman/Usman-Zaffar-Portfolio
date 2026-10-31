@@ -40,6 +40,16 @@ GitHub Pages lets browsers cache each file for about 10 minutes. To stop visitor
 - Layout tested from 360 pixel wide phones to 2560 pixel monitors, including iPad portrait and landscape. Touch screens get larger tap targets.
 - The page needs no external requests. Fonts, icons and the 3D library are all stored in the repo.
 
+## Tab icon and link preview
+
+Files in the project root: `favicon.ico`, `favicon.svg`, `favicon-32x32.png`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, `site.webmanifest` and `og-image.png` (the 1200x630 preview card shown when the link is shared).
+
+Some browsers and apps ask for `/favicon.ico` first and show a grey letter if it is missing, which is why the ICO is included next to the SVG. The `<head>` in `index.html` points to these files with full web addresses and the version tag, so `bump-version.sh` refreshes them on every publish.
+
+If you ever move to a custom domain, replace `https://73256usman.github.io/Usman-Zaffar-Portfolio/` in the `<head>` of `index.html` (canonical, og:url, og:image, twitter:image and the icon links) with the new address.
+
+Browsers cache tab icons for a long time. To check a change, open the site in a private window. To refresh the LinkedIn preview card, paste the link into the LinkedIn Post Inspector (linkedin.com/post-inspector) and press Inspect.
+
 ## Hosting
 
 GitHub Pages, deploying from the `master` branch root. Settings, Pages, Source: "Deploy from a branch", branch `master`, folder `/ (root)`. The same files also work on Vercel or Netlify with no changes.

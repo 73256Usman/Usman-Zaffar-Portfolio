@@ -70,6 +70,8 @@ Then open http://localhost:8000 in your browser. Press Ctrl+C in Terminal to sto
 
 ```
 index.html              Page structure and sections
+favicon.*, icon-*.png   Tab icons (also apple-touch-icon.png, site.webmanifest)
+og-image.png            Preview card shown when the link is shared
 assets/
   css/style.css         All styling and colors
   js/data.js            All content (edit this most often)

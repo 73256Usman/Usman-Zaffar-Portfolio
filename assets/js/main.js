@@ -1,8 +1,8 @@
 import {
   profile, tracks, projects, filters, toolkit, methods, toolFilters,
   experience, education, bio, aboutTitle, credentials,
-} from "./data.js?v=202610311821";
-import { initScene } from "./scene.js?v=202610311821";
+} from "./data.js?v=202610311828";
+import { initScene } from "./scene.js?v=202610311828";
 
 const ghost = document.createElement("div"); // stands in for any element missing from the HTML, so one mismatch can never blank the page
 const $ = (s, r = document) => r.querySelector(s) || ghost;
