@@ -5,6 +5,10 @@ export const profile = {
   short: "uz",
   email: "732.usman@gmail.com",
   location: "Edison, NJ",
+  intro:
+    "Information Technology senior at NJIT with Security+, real security operations experience and hands-on IT support. I build labs, fix real problems, and write up what I find.",
+  contactLine:
+    "Open to SOC analyst, security analyst, help desk and IT support roles.",
   github: "https://github.com/73256Usman",
   linkedin: "https://www.linkedin.com/in/usmanzaffar/",
   resumes: {
@@ -19,87 +23,81 @@ export const tracks = {
     label: "Cyber",
     prompt: "usman@portfolio:~$ whoami --track cyber",
     tagline: "DETECT. INVESTIGATE. DEFEND.",
-    intro:
-      "Security analyst in training with real operations experience. I build labs, watch the alerts, and write up what I find.",
     pillars: [
       ["01 / DETECT", "Turn raw logs into signal."],
       ["02 / INVESTIGATE", "Follow the evidence end to end."],
       ["03 / HARDEN", "Fix it, rescan it, prove it."],
     ],
-    badge: "NJIT B.S. Information Technology · Security+ · 2027",
+    badge: "NJIT B.S. Information Technology · Class of 2027 · Security+",
     strip: ["SOC", "BLUE TEAM", "VULN MGMT", "AI SECURITY"],
     workTitle: "Labs. Evidence. Detections.",
     workIntro:
       "Home labs, coursework and research. Each one shows the setup, what I did and the tools involved.",
-    capTitle: "How I work.",
+    capTitle: "The security cycle.",
+    capIntro: "Good security work is a loop, not a checklist. This is how I approach each pass through it.",
+    cycle: ["Detect", "Triage", "Investigate", "Contain", "Recover", "Improve"],
     caps: [
       {
         n: "01",
-        title: "Detection & monitoring",
-        text: "Wazuh agents, alert triage and custom rules for simulated attacks.",
-        tags: ["Wazuh", "SIEM", "Log analysis", "Threat hunting"],
+        title: "Detect and triage",
+        text: "Collect the signal, separate noise from real threats, and rank what needs attention first.",
+        tags: ["Monitoring", "Log analysis", "Alert triage", "Threat hunting"],
       },
       {
         n: "02",
-        title: "Investigation & response",
-        text: "Phishing, packet captures and malware in isolated VMs, written up clearly.",
-        tags: ["Phishing analysis", "Wireshark", "Incident response", "Malware analysis"],
+        title: "Investigate and respond",
+        text: "Scope the incident, contain it, keep the evidence intact, and document every step taken.",
+        tags: ["Incident response", "Phishing analysis", "Containment", "Reporting"],
       },
       {
         n: "03",
-        title: "Vulnerability & hardening",
-        text: "Scan, fix, rescan. Identity, endpoints and Windows domain security.",
-        tags: ["Nessus", "Active Directory", "Group Policy", "CVE / CVSS"],
+        title: "Harden and verify",
+        text: "Fix the root cause, tighten the controls, then retest to prove the fix actually worked.",
+        tags: ["Vulnerability management", "Remediation", "Hardening", "Retesting"],
       },
     ],
     expTitle: "Operations. Support. Delivery.",
-    aboutTitle: "Security is a habit.",
     contactTitle: "Let's talk security.",
-    contactLine:
-      "Open to SOC analyst, security analyst and entry level AI security roles.",
   },
   it: {
     label: "IT",
     prompt: "usman@portfolio:~$ whoami --track it",
     tagline: "SUPPORT. FIX. DOCUMENT.",
-    intro:
-      "IT technician who fixes real problems for real clients. Windows, macOS, Active Directory and the automation that saves everyone time.",
     pillars: [
       ["01 / SUPPORT", "Get people working again."],
       ["02 / ADMINISTER", "Users, devices and policy."],
       ["03 / AUTOMATE", "Script the repeat work."],
     ],
-    badge: "NJIT B.S. Information Technology · Security+ · 2027",
+    badge: "NJIT B.S. Information Technology · Class of 2027 · Security+",
     strip: ["HELP DESK", "WINDOWS", "MACOS", "ACTIVE DIRECTORY"],
     workTitle: "Systems. Fixes. Automation.",
     workIntro:
       "Home labs, client work and apps I have shipped. Each one shows the setup, what I did and the tools involved.",
-    capTitle: "How I work.",
+    capTitle: "The support cycle.",
+    capIntro: "Good IT work follows a repeatable loop. This is the process I follow on every request, from first contact to final notes.",
+    cycle: ["Intake", "Diagnose", "Resolve", "Verify", "Document", "Prevent"],
     caps: [
       {
         n: "01",
-        title: "Support & troubleshooting",
-        text: "On-call jobs for Windows and macOS clients, from virus removal to OS installs.",
-        tags: ["Windows", "macOS", "Troubleshooting", "Printers"],
+        title: "Intake and diagnose",
+        text: "Capture the problem clearly, reproduce it, and find the root cause before changing anything.",
+        tags: ["Troubleshooting", "Root cause", "Reproducing issues"],
       },
       {
         n: "02",
-        title: "Administration",
-        text: "Domain controllers, users, groups, Group Policy and endpoint management.",
-        tags: ["Active Directory", "Group Policy", "Microsoft 365", "Intune"],
+        title: "Resolve and restore",
+        text: "Apply the fix, confirm it works for the user, and get them back to productive work.",
+        tags: ["Remediation", "Windows", "macOS", "User support"],
       },
       {
         n: "03",
-        title: "Automation & delivery",
-        text: "Python, PowerShell and cron jobs, plus iOS apps shipped to the App Store.",
-        tags: ["Python", "PowerShell", "Cron", "OS imaging"],
+        title: "Document and prevent",
+        text: "Write down what happened, update procedures, and automate the issues that keep coming back.",
+        tags: ["Documentation", "SOPs", "Automation"],
       },
     ],
     expTitle: "Support. Systems. Shipping.",
-    aboutTitle: "Fix it. Then document it.",
     contactTitle: "Let's get to work.",
-    contactLine:
-      "Open to help desk, desktop support, service desk and IT technician roles.",
   },
 };
 
@@ -108,9 +106,9 @@ export const projects = [
   {
     id: "ad-lab",
     title: "Active Directory Home Lab",
-    meta: "Virtual lab · 2025",
+    meta: "Virtual lab",
     track: "both",
-    tags: ["Identity", "Windows Server", "Group Policy"],
+    tags: ["Identity", "Windows", "Group Policy"],
     flow: ["Domain controller", "Join workstations", "Users and groups", "Group Policy"],
     summary:
       "A small Windows domain built from scratch in virtual machines, used as the base for most of my other labs.",
@@ -124,7 +122,7 @@ export const projects = [
   {
     id: "wazuh",
     title: "Wazuh Detection Lab",
-    meta: "Home lab · 2025",
+    meta: "Home lab",
     track: "cyber",
     tags: ["Blue team", "SIEM"],
     flow: ["Agents", "Telemetry", "Alerts", "Custom rules"],
@@ -135,12 +133,12 @@ export const projects = [
       "Wrote custom detection rules for simulated attacks.",
       "Used each simulated attack to check that the alerts were clear and useful.",
     ],
-    tools: ["Wazuh", "Windows endpoints", "Detection rules"],
+    tools: ["Wazuh", "Detection", "Detection rules"],
   },
   {
     id: "nessus",
     title: "Vulnerability Scanning with Nessus",
-    meta: "Home lab · 2025",
+    meta: "Home lab",
     track: "cyber",
     tags: ["Vuln management"],
     flow: ["Scan", "Prioritize", "Remediate", "Rescan"],
@@ -158,7 +156,7 @@ export const projects = [
     title: "TryHackMe SOC Investigations",
     meta: "Hands-on rooms · ongoing",
     track: "cyber",
-    tags: ["Blue team", "Forensics"],
+    tags: ["Blue team", "Phishing"],
     flow: ["Alert", "Packet capture", "Pivot", "Write-up"],
     summary:
       "Guided SOC style investigations that build the day to day habits of an analyst.",
@@ -167,7 +165,7 @@ export const projects = [
       "Analyzed traffic in Wireshark to follow suspicious activity.",
       "Investigated phishing emails and documented the findings.",
     ],
-    tools: ["Wireshark", "TryHackMe", "Threat hunting"],
+    tools: ["Wireshark", "Detection", "Threat hunting"],
   },
   {
     id: "secure-ai",
@@ -183,12 +181,12 @@ export const projects = [
       "Planning attacks against it, then a hardened rebuild to compare results.",
       "Following the structure of the public AI Security Projects collection on secure AI agents.",
     ],
-    tools: ["Python", "LLM agents", "API security"],
+    tools: ["Python", "Scripting", "API security"],
   },
   {
     id: "kali-lab",
     title: "Cybersecurity Home Lab",
-    meta: "Virtual lab · 2025",
+    meta: "Virtual lab",
     track: "cyber",
     tags: ["Red team", "Network security"],
     flow: ["Isolate", "Scan", "Exploit", "Snapshot"],
@@ -204,9 +202,9 @@ export const projects = [
   {
     id: "malware",
     title: "Malware Analysis in VMs",
-    meta: "Isolated lab · 2025",
+    meta: "Isolated lab",
     track: "cyber",
-    tags: ["Blue team", "Forensics"],
+    tags: ["Blue team", "Malware"],
     flow: ["Isolate", "Detonate", "Observe", "Document"],
     summary:
       "Safe analysis of malicious samples inside disposable virtual machines.",
@@ -220,9 +218,9 @@ export const projects = [
   {
     id: "usb",
     title: "USB Hardware Keylogger Research",
-    meta: "Defensive research · 2025",
+    meta: "Defensive research",
     track: "cyber",
-    tags: ["Hardware", "Endpoint"],
+    tags: ["Hardware", "Blue team"],
     flow: ["Build", "Observe", "Detect", "Defend"],
     summary:
       "A functional hardware keylogger built to understand physical attack paths and how to defend against them.",
@@ -236,7 +234,7 @@ export const projects = [
   {
     id: "helpdesk",
     title: "IT Help Desk Home Lab",
-    meta: "Simulated environment · 2025",
+    meta: "Simulated environment",
     track: "it",
     tags: ["Help desk", "Windows"],
     flow: ["Ticket", "Diagnose", "Resolve", "Document"],
@@ -263,7 +261,7 @@ export const projects = [
       "Scheduled jobs with cron.",
       "Used Claude Code and Codex daily to build and review code faster.",
     ],
-    tools: ["Python", "PowerShell", "Cron", "Git"],
+    tools: ["Python", "Scripting", "Cron", "Git"],
   },
   {
     id: "ios",
@@ -284,38 +282,38 @@ export const projects = [
 ];
 
 export const filters = {
-  cyber: ["All work", "Blue team", "Red team", "Vuln management", "AI security", "Forensics"],
+  cyber: ["All work", "Blue team", "Red team", "Vuln management", "AI security", "Identity", "Automation"],
   it: ["All work", "Help desk", "Windows", "Automation", "Development"],
 };
 
 export const toolkit = [
-  // [name, group, tracks]
-  ["Wazuh", "Detection", "cyber"],
-  ["Nessus", "Detection", "cyber"],
-  ["Wireshark", "Detection", "cyber"],
-  ["Nmap", "Offensive", "cyber"],
-  ["Metasploit", "Offensive", "cyber"],
-  ["Hydra", "Offensive", "cyber"],
-  ["Kali Linux", "Offensive", "cyber"],
-  ["DVWA", "Offensive", "cyber"],
-  ["TryHackMe", "Detection", "cyber"],
-  ["Microsoft 365", "Systems", "both"],
-  ["Intune", "Systems", "it"],
-  ["Active Directory", "Systems", "both"],
-  ["Group Policy", "Systems", "both"],
-  ["Windows Server", "Systems", "both"],
-  ["Windows 10 / 11", "Systems", "it"],
-  ["macOS", "Systems", "it"],
-  ["VirtualBox", "Systems", "both"],
-  ["OS imaging", "Systems", "it"],
-  ["Asset tracking", "Systems", "it"],
-  ["Printers", "Systems", "it"],
-  ["Python", "Languages", "both"],
-  ["PowerShell", "Languages", "both"],
-  ["Bash and cron", "Languages", "both"],
-  ["Git and GitHub", "Languages", "both"],
-  ["Claude Code", "Languages", "both"],
-  ["Codex", "Languages", "both"],
+  // [name, group, tracks, icon file in assets/icons]
+  ["Wazuh", "Detection", "cyber", "eye"],
+  ["Nessus", "Detection", "cyber", "scan"],
+  ["Wireshark", "Detection", "cyber", "wireshark"],
+  ["Nmap", "Offensive", "cyber", "network"],
+  ["Metasploit", "Offensive", "cyber", "metasploit"],
+  ["Hydra", "Offensive", "cyber", "key"],
+  ["Kali Linux", "Offensive", "cyber", "kali"],
+  ["DVWA", "Offensive", "cyber", "bug"],
+  ["TryHackMe", "Training", "cyber", "tryhackme"],
+  ["Microsoft 365", "Systems", "both", "cloud"],
+  ["Intune", "Systems", "it", "laptop"],
+  ["Active Directory", "Systems", "both", "users"],
+  ["Group Policy", "Systems", "both", "folder"],
+  ["Windows Server", "Systems", "both", "server"],
+  ["Windows 10 / 11", "Systems", "it", "windows"],
+  ["macOS", "Systems", "it", "macos"],
+  ["VirtualBox", "Systems", "both", "virtualbox"],
+  ["OS imaging", "Support", "it", "harddrive"],
+  ["Asset tracking", "Support", "it", "clipboard"],
+  ["Printers", "Support", "it", "printer"],
+  ["Python", "Scripting", "both", "python"],
+  ["PowerShell", "Scripting", "both", "powershell"],
+  ["Bash and cron", "Scripting", "both", "bash"],
+  ["Git and GitHub", "Dev and AI", "both", "github"],
+  ["Claude Code", "Dev and AI", "both", "claude"],
+  ["Codex", "Dev and AI", "both", "terminal"],
 ];
 
 export const methods = {
@@ -333,19 +331,17 @@ export const methods = {
     "Risk assessment",
   ],
   it: [
-    "Ticket documentation",
+    "Documentation and SOPs",
     "Root cause troubleshooting",
     "Account and access management",
-    "Patching and updates",
     "Endpoint management",
-    "Customer communication",
-    "SOP writing",
+    "Client communication",
   ],
 };
 
 export const toolFilters = {
-  cyber: ["All tools", "Detection", "Offensive", "Systems", "Languages"],
-  it: ["All tools", "Systems", "Languages"],
+  cyber: ["All tools", "Detection", "Offensive", "Training", "Systems", "Scripting", "Dev and AI"],
+  it: ["All tools", "Systems", "Support", "Scripting", "Dev and AI"],
 };
 
 export const experience = [
@@ -357,18 +353,11 @@ export const experience = [
     org: "Geeks On Site",
     place: "Client sites",
     stat: ["4 to 5", "on-call jobs per week"],
-    bullets: {
-      it: [
-        "Complete 4 to 5 on-call service jobs a week for Windows and macOS clients.",
-        "Handle OS installs, troubleshooting and day to day fixes on site.",
-        "Explain what went wrong and what was done in plain language.",
-      ],
-      cyber: [
-        "Remove viruses and malware from client Windows and macOS machines.",
-        "Triage infected systems on site and restore them to a clean working state.",
-        "Install and reinstall operating systems for clients.",
-      ],
-    },
+    bullets: [
+      "Complete 4 to 5 on-call service jobs a week for Windows and macOS clients.",
+      "Handle virus and malware removal, OS installs and general troubleshooting.",
+      "Work independently as a Level 2 technician across a mix of client environments.",
+    ],
   },
   {
     id: "ios-exp",
@@ -378,17 +367,11 @@ export const experience = [
     org: "Apple App Store",
     place: "Independent",
     stat: ["Multiple", "apps published"],
-    bullets: {
-      it: [
-        "Design, build and publish iOS apps on my own.",
-        "Maintain the apps and ship updates.",
-        "Use Git and AI coding tools daily to move faster.",
-      ],
-      cyber: [
-        "Build and publish iOS apps end to end, including release and updates.",
-        "Use Git and AI coding tools daily.",
-      ],
-    },
+    bullets: [
+      "Design, build and publish iOS apps on my own.",
+      "Maintain the apps and ship updates.",
+      "Use Git and AI coding tools daily.",
+    ],
   },
   {
     id: "mastercard",
@@ -398,39 +381,26 @@ export const experience = [
     org: "Mastercard",
     place: "Online",
     stat: ["M365", "phishing analysis"],
-    bullets: {
-      it: [
-        "Worked through a Mastercard security awareness simulation as a security analyst.",
-        "Reviewed Microsoft 365 phishing scenarios and recommended responses.",
-      ],
-      cyber: [
-        "Analyzed malicious emails and simulations, spotting spoofed senders and risky user behavior.",
-        "Investigated compromised accounts and recommended containment such as credential resets and access reviews.",
-        "Reported weaknesses and proposed targeted mitigations.",
-      ],
-    },
+    bullets: [
+      "Completed the Mastercard cybersecurity analyst job simulation on Forage.",
+      "Analyzed malicious emails and simulations, spotting spoofed senders and risky user behavior.",
+      "Investigated compromised accounts and recommended containment such as credential resets and access reviews.",
+    ],
   },
   {
     id: "metro",
     dates: "Nov 2023 to Aug 2025",
-    kind: "Full time",
+    kind: "Security operations",
     role: "Security Operations Analyst",
     org: "Metro One",
     place: "Edison, NJ · Amazon warehouse site",
     stat: ["150+", "access events per shift"],
-    bullets: {
-      cyber: [
-        "Monitored 150+ access events per shift across 4 entry points for a site of 200+ employees.",
-        "Investigated incidents using system activity, access logs and surveillance data, and wrote detailed reports.",
-        "Escalated unusual activity following incident response procedures.",
-        "Kept policy compliance on track through documentation and system reviews, and trained new analysts on tools and SOPs.",
-      ],
-      it: [
-        "Worked with physical security systems that run on IT infrastructure.",
-        "Managed access at high risk vendor lanes and four entry points.",
-        "Kept documentation and SOPs current and trained new analysts on the tools.",
-      ],
-    },
+    bullets: [
+      "Monitored 150+ access events per shift across 4 entry points, including high risk vendor lanes, for a site of 200+ employees.",
+      "Investigated incidents using system activity, access logs and surveillance data, wrote detailed reports, and escalated unusual activity following incident response procedures.",
+      "Monitored physical security systems that run on IT infrastructure.",
+      "Kept policy compliance on track through documentation and system reviews, and trained new analysts on tools and SOPs.",
+    ],
   },
 ];
 
@@ -451,31 +421,20 @@ export const education = [
   },
 ];
 
-export const skillGroups = {
-  cyber: [
-    ["Security operations", "Log analysis, alert triage, incident reports, access monitoring"],
-    ["Offense and testing", "Nmap, Metasploit, Hydra, DVWA, Kali Linux"],
-    ["Identity and frameworks", "MFA, SSO, SAML, OAuth, CVE / CVSS, NIST, OWASP"],
-    ["Automation", "Python, PowerShell, cron jobs"],
-  ],
-  it: [
-    ["Support", "Windows, macOS, virus removal, OS installs, printers"],
-    ["Administration", "Active Directory, Group Policy, Microsoft 365, Intune"],
-    ["Operations", "OS imaging, asset and inventory tracking, documentation"],
-    ["Automation", "Python, PowerShell, cron jobs"],
-  ],
-};
+export const skillGroups = [
+  ["Security operations", "Log analysis, alert triage, incident reports, access monitoring, Wazuh, Nessus, Wireshark"],
+  ["Support and administration", "Windows, macOS, Active Directory, Group Policy, Microsoft 365, Intune, OS imaging"],
+  ["Testing and frameworks", "Nmap, Metasploit, Hydra, Kali Linux, MFA, SSO, SAML, OAuth, CVE / CVSS, NIST, OWASP"],
+  ["Automation and development", "Python, PowerShell, cron jobs, Git, iOS development"],
+];
 
-export const bio = {
-  cyber: [
-    "I am a senior at NJIT studying Information Technology with a Cybersecurity concentration. Before school was done I was already working in security operations, watching access events at a busy warehouse site and writing up incidents.",
-    "Outside of work I build labs: a Windows domain, Wazuh monitoring, Nessus scans, and an AI agent security project I am working on now. I like the loop of break it, detect it, fix it and prove it.",
-  ],
-  it: [
-    "I am a senior at NJIT studying Information Technology. Right now I work on call for Geeks On Site, fixing Windows and macOS problems for clients, and I publish my own iOS apps on the side.",
-    "I enjoy the practical side of IT: getting someone unstuck, building a domain that behaves, and scripting the boring parts so they never come back.",
-  ],
-};
+export const aboutTitle = "Both sides of the system.";
+
+export const bio = [
+  "I am a senior at NJIT studying Information Technology, with concentrations in Cybersecurity, Network and Information Systems, and Database Management. I hold CompTIA Security+ and plan to add Azure Fundamentals next.",
+  "My work history covers both sides. I spent nearly two years in security operations at a warehouse site in Edison, watching access events and writing up incidents. Today I work on call as a Level 2 technician for Geeks On Site, fixing Windows and macOS problems for clients, and I build and publish my own iOS apps.",
+  "Outside of work I build labs: a Windows domain, Wazuh monitoring, Nessus scans, and an AI agent security project I am working on now. Having both backgrounds is the point. Knowing how a system is supposed to work makes it easier to see when something is wrong.",
+];
 
 export const credentials = [
   {

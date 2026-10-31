@@ -1,6 +1,6 @@
 import {
   profile, tracks, projects, filters, toolkit, methods, toolFilters,
-  experience, education, skillGroups, bio, credentials, labsList,
+  experience, education, skillGroups, bio, aboutTitle, credentials, labsList,
 } from "./data.js";
 import { initScene } from "./scene.js";
 
@@ -79,11 +79,11 @@ function renderHero() {
   const t = tracks[state.track];
   $("#promptText").textContent = t.prompt;
   $("#tagline").textContent = t.tagline;
-  $("#intro").textContent = t.intro;
+  $("#intro").textContent = profile.intro;
   $("#badge").textContent = t.badge;
   $("#pillars").innerHTML = t.pillars.map(([a, b]) => `<li><span>${esc(a)}</span><p>${esc(b)}</p></li>`).join("");
   $("#strip").innerHTML = t.strip.map((s) => `<li>${esc(s)}</li>`).join("");
-  ["#tagline", "#intro", "#pillars", "#badge", "#strip"].forEach((s) => swapAnim($(s)));
+  ["#tagline", "#pillars", "#strip"].forEach((s) => swapAnim($(s)));
 }
 
 /* ---------- work ---------- */
@@ -91,7 +91,7 @@ function renderFilters() {
   const list = filters[state.track];
   if (!list.includes(state.workFilter)) state.workFilter = list[0];
   $("#workFilters").innerHTML = list.map((f) =>
-    `<button class="chip" role="tab" aria-selected="${f === state.workFilter}" data-f="${esc(f)}">${esc(f)}</button>`).join("");
+    `<button class="chip" type="button" aria-pressed="${f === state.workFilter}" data-f="${esc(f)}">${esc(f)}</button>`).join("");
 }
 function renderWork() {
   const t = tracks[state.track];
@@ -124,22 +124,20 @@ function renderWork() {
 function renderCaps() {
   const t = tracks[state.track];
   $("#capTitle").textContent = t.capTitle;
+  $("#capIntro").textContent = t.capIntro;
+  $("#cycle").innerHTML = t.cycle.map((c, i) => `<li><span>0${i + 1}</span>${esc(c)}</li>`).join("");
   $("#caps").innerHTML = t.caps.map((c) => `
     <div class="col"><span class="n">${esc(c.n)}</span><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p>
     <ul class="tags">${c.tags.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
-  swapAnim($("#caps"));
+  swapAnim($("#caps")); swapAnim($("#cycle"));
 }
 
 /* ---------- toolkit ---------- */
-function monogram(name) {
-  const w = name.replace(/[^A-Za-z0-9 ]/g, " ").trim().split(/\s+/);
-  return (w.length > 1 ? w[0][0] + w[1][0] : name.slice(0, 2)).toUpperCase();
-}
 function renderToolFilters() {
   const list = toolFilters[state.track];
   if (!list.includes(state.toolFilter)) state.toolFilter = list[0];
   $("#toolFilters").innerHTML = list.map((f) =>
-    `<button class="chip" role="tab" aria-selected="${f === state.toolFilter}" data-f="${esc(f)}">${esc(f)}</button>`).join("");
+    `<button class="chip" type="button" aria-pressed="${f === state.toolFilter}" data-f="${esc(f)}">${esc(f)}</button>`).join("");
 }
 function renderTools() {
   const q = state.toolQuery.trim().toLowerCase();
@@ -148,8 +146,12 @@ function renderTools() {
     (state.toolFilter === "All tools" || g === state.toolFilter) &&
     (!q || n.toLowerCase().includes(q) || g.toLowerCase().includes(q)));
   $("#toolCount").textContent = `${items.length} tool${items.length === 1 ? "" : "s"}`;
-  $("#tools").innerHTML = items.map(([n, g]) =>
-    `<li class="tool"><span class="tool-mark" aria-hidden="true">${esc(monogram(n))}</span><span class="tool-name">${esc(n)}<span class="tool-group">${esc(g.toUpperCase())}</span></span></li>`).join("");
+  $("#tools").innerHTML = items.map(([n, g, , icon]) => `
+    <li class="tool">
+      <span class="tool-icon" aria-hidden="true"><img src="assets/icons/${esc(icon)}.svg" alt="" width="40" height="40" loading="lazy" decoding="async" onerror="this.remove()" /></span>
+      <span class="tool-name">${esc(n)}</span>
+      <span class="tool-group">${esc(g.toUpperCase())}</span>
+    </li>`).join("");
   $("#methods").innerHTML = methods[state.track].map((m) => `<li>${esc(m)}</li>`).join("");
 }
 
@@ -163,7 +165,7 @@ function renderExperience() {
       <div>
         <h3>${esc(j.role)}</h3>
         <p class="job-org">${esc(j.org)} <span>· ${esc(j.place)}</span></p>
-        <ul>${j.bullets[state.track].map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+        <ul>${j.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
       </div>
       <div class="job-stat"><b>${esc(j.stat[0])}</b><span>${esc(j.stat[1])}</span></div>
     </li>`).join("");
@@ -172,13 +174,12 @@ function renderExperience() {
 
 /* ---------- about ---------- */
 function renderAbout() {
-  const t = tracks[state.track];
-  $("#aboutTitle").textContent = t.aboutTitle;
-  $("#bio").innerHTML = bio[state.track].map((p) => `<p>${esc(p)}</p>`).join("");
+  $("#aboutTitle").textContent = aboutTitle;
+  $("#bio").innerHTML = bio.map((p) => `<p>${esc(p)}</p>`).join("");
   $("#education").innerHTML = education.map((e) => `
     <li><b>${esc(e.degree)}</b><p class="school">${esc(e.school)}</p><p class="note">${esc(e.note)}</p>
     <div class="row"><span class="pill on">${esc(e.dates)}</span>${e.extra ? `<span class="pill">${esc(e.extra)}</span>` : ""}</div></li>`).join("");
-  $("#skills").innerHTML = skillGroups[state.track].map(([a, b]) => `<div><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join("");
+  $("#skills").innerHTML = skillGroups.map(([a, b]) => `<div><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join("");
 }
 
 /* ---------- credentials + contact ---------- */
@@ -193,7 +194,7 @@ function renderCreds() {
 function renderContact() {
   const t = tracks[state.track];
   $("#contactTitle").textContent = t.contactTitle;
-  $("#contactLine").textContent = t.contactLine;
+  $("#contactLine").textContent = profile.contactLine;
 }
 
 /* ---------- track switching ---------- */
