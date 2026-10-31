@@ -103,6 +103,8 @@ export const tracks = {
 };
 
 // track: "cyber" | "it" | "both". "both" shows on either side of the toggle.
+// Optional: add  links: [{ label: "View on GitHub", url: "https://github.com/..." }]  to any project
+// and the links appear inside the expanded card. See docs/EDITING-GUIDE.md.
 export const projects = [
   {
     id: "ad-lab",

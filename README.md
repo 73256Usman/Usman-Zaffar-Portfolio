@@ -1,49 +1,93 @@
 # Usman Zaffar | Cybersecurity & IT Portfolio
 
-A static portfolio with a **Cyber / IT switch**. Flip the toggle in the header and the hero, projects, experience, tools and bio all change to match the track.
-
 Live site: https://73256usman.github.io/Usman-Zaffar-Portfolio/
 
-## Features
+A personal portfolio with a **Cyber / IT switch**. One person, one set of facts, two lenses. The switch changes what leads (projects, tools, the process section, the resume button), not who I am.
 
-- Dark, terminal inspired design with a self-hosted Space Grotesk and JetBrains Mono pairing
-- Original animated 3D hero shape (Three.js), with a CSS fallback if WebGL is unavailable
-- Cyber and IT views, remembered between visits and shareable with `?track=it`
-- Filterable project case studies, searchable toolkit, experience timeline
-- Ctrl K command palette
-- Resume download buttons that appear automatically when the PDFs exist
-- No build step and no external requests: plain HTML, CSS and JavaScript
+Everything is plain HTML, CSS and JavaScript. There is no build step and no framework, so it can be edited with any text editor and hosted for free on GitHub Pages.
 
-## Update the content
+## Page order
 
-Everything lives in `assets/js/data.js`: projects, experience, tools, education and links. Edit it, commit, push.
+1. Snapshot (name, summary, four quick facts)
+2. Work experience
+3. Education and certifications
+4. Skills and tools
+5. Projects and labs
+6. How I work
+7. About
+8. Contact
 
-## Add your resumes
+## Quick reference: where to change things
+
+| I want to change | File | Section to look for |
+| --- | --- | --- |
+| Name, email, links, summary, quick facts | `assets/js/data.js` | `profile` |
+| A job or experience entry | `assets/js/data.js` | `experience` |
+| Degree or school | `assets/js/data.js` | `education` |
+| Certifications (add CySA+, SC-200, mark AZ-900 earned) | `assets/js/data.js` | `credentials` |
+| Projects and labs (and their links) | `assets/js/data.js` | `projects` |
+| Tools and their icons | `assets/js/data.js` and `assets/icons/` | `toolkit` |
+| Key skills chips | `assets/js/data.js` | `methods` |
+| About text | `assets/js/data.js` | `bio` |
+| Cyber / IT headings and the process steps | `assets/js/data.js` | `tracks` |
+| Resume PDFs | `resume/` folder | file names below |
+| Colors, fonts, spacing | `assets/css/style.css` | `:root` at the top |
+| Page structure and section order | `index.html` | |
+
+Step by step instructions with copy and paste examples are in [docs/EDITING-GUIDE.md](docs/EDITING-GUIDE.md).
+How the site works under the hood is in [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
+
+## Resumes
 
 Put your two PDFs in the `resume/` folder with these exact names:
 
 - `Usman-Zaffar-Cybersecurity-Resume.pdf`
 - `Usman-Zaffar-IT-Resume.pdf`
 
-The download buttons show up on their own once the files are there.
+The download buttons appear on their own once the files exist. Until then they stay hidden.
 
-## Before every push
+## Publishing changes
 
-Run `bash bump-version.sh` once before you commit. It changes the version tag on the site files so visitors' browsers fetch the newest scripts and styles instead of an old cached copy.
+After you edit files, run this from the project folder:
 
-## Run it locally
+```bash
+bash publish.sh "short note about what you changed"
+```
 
-Modules need a web server, so opening the file directly will not work.
+It updates the cache version, commits, and pushes. The live site refreshes in about a minute. Open it in a private window to skip any old cached copy.
+
+## Run it on your own computer first
+
+Modules need a web server, so double clicking `index.html` will not work.
 
 ```bash
 python3 -m http.server 8000
-# then open http://localhost:8000
 ```
 
-## Deploy
+Then open http://localhost:8000 in your browser. Press Ctrl+C in Terminal to stop it.
 
-Hosted on GitHub Pages straight from the `master` branch (Settings, Pages, Deploy from a branch, `/root`). Every push updates the live site in about a minute. It also works unchanged on Vercel or Netlify.
+## Project layout
+
+```
+index.html              Page structure and sections
+assets/
+  css/style.css         All styling and colors
+  js/data.js            All content (edit this most often)
+  js/main.js            Page logic: filters, view switch, search palette
+  js/scene.js           The 3D network in the hero
+  icons/                Tool logos and icons (SVG)
+  fonts/                Self-hosted fonts
+  vendor/               Three.js (3D library) and its license
+resume/                 Your resume PDFs go here
+docs/                   Guides for future you
+publish.sh              One command publish
+bump-version.sh         Cache busting (called by publish.sh)
+CHANGELOG.md            A running log of changes
+```
 
 ## Credits
 
-Fonts: Space Grotesk and JetBrains Mono (SIL Open Font License). 3D: Three.js (MIT), included in `assets/vendor` with its license.
+- Fonts: Space Grotesk and JetBrains Mono (SIL Open Font License)
+- 3D: Three.js (MIT license), included in `assets/vendor`
+- Icons: Simple Icons (CC0), Devicon (MIT) and Lucide (ISC)
+- Brand logos belong to their owners and are shown only to identify the tools used

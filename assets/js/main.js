@@ -1,8 +1,8 @@
 import {
   profile, tracks, projects, filters, toolkit, methods, toolFilters,
   experience, education, bio, aboutTitle, credentials,
-} from "./data.js?v=202610311813";
-import { initScene } from "./scene.js?v=202610311813";
+} from "./data.js?v=202610311821";
+import { initScene } from "./scene.js?v=202610311821";
 
 const ghost = document.createElement("div"); // stands in for any element missing from the HTML, so one mismatch can never blank the page
 const $ = (s, r = document) => r.querySelector(s) || ghost;
@@ -117,7 +117,8 @@ function renderWork() {
           <div><p>${esc(p.summary)}</p><h4>TOOLS</h4>
           <ul class="tags">${p.tools.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>
           <div><h4>WHAT I DID</h4>
-          <ul class="did">${p.did.map((d) => `<li>${esc(d)}</li>`).join("")}</ul></div>
+          <ul class="did">${p.did.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>
+          ${(p.links || []).length ? `<h4>LINKS</h4><ul class="card-links">${p.links.map((l) => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)} <span aria-hidden="true">↗</span></a></li>`).join("")}</ul>` : ""}</div>
         </div>
       </div></div></div>
     </article>`).join("") : `<p class="empty">Nothing matches that filter yet.</p>`;
