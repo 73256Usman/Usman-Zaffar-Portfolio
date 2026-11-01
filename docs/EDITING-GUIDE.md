@@ -193,3 +193,11 @@ bash publish.sh "Added CySA+ certification"
 - If you changed a file but forgot `publish.sh`, run it. It bumps the version tag that forces browsers to fetch the new files.
 - Check the repo on GitHub, Actions tab. A green check next to "pages build and deployment" means the update is live.
 - To undo your last change: `git revert HEAD` then `git push origin master`.
+
+
+## Look and feel quick reference
+
+- **Colors:** the top of `assets/css/style.css` (`:root`). `--accent` is the Cyber color (ice blue) and the `:root[data-track="it"]` block below it is the IT color (teal).
+- **Fonts:** headlines use Barlow Condensed (`--display`), everything else uses Montserrat (`--sans`), and code-like bits use JetBrains Mono (`--mono`). All three are stored in `assets/fonts/`.
+- **Your photo:** put it at `assets/img/usman.jpg`. See `assets/img/README.md`.
+- **The line under your name ("Open to ...")** is `badge` for each view, in `tracks` inside `data.js`.

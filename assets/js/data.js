@@ -8,6 +8,8 @@ export const profile = {
   intro:
     "NJIT Information Technology senior with CompTIA Security+, nearly two years in security operations, and hands-on IT support experience.",
   badge: "Open to work · Edison, NJ",
+  photo: "assets/img/usman.jpg",
+  photoAlt: "Portrait of Usman Zaffar",
   facts: [
     ["EDUCATION", "B.S. Information Technology", "NJIT · 3.8 GPA · Summer 2027"],
     ["CERTIFICATION", "CompTIA Security+", "Earned"],
@@ -35,7 +37,7 @@ export const tracks = {
       ["02 / INVESTIGATE", "Follow the evidence end to end."],
       ["03 / HARDEN", "Fix it, rescan it, prove it."],
     ],
-    badge: "NJIT B.S. Information Technology · Class of 2027 · Security+",
+    badge: "Open to SOC and security analyst roles · Edison, NJ",
     strip: ["SOC", "BLUE TEAM", "VULN MGMT", "AI SECURITY"],
     workTitle: "Security projects and labs.",
     workIntro:
@@ -72,7 +74,7 @@ export const tracks = {
       ["02 / ADMINISTER", "Users, devices and policy."],
       ["03 / AUTOMATE", "Script the repeat work."],
     ],
-    badge: "NJIT B.S. Information Technology · Class of 2027 · Security+",
+    badge: "Open to help desk and IT support roles · Edison, NJ",
     strip: ["HELP DESK", "WINDOWS", "MACOS", "ACTIVE DIRECTORY"],
     workTitle: "IT projects and labs.",
     workIntro:

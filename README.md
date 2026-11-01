@@ -91,7 +91,7 @@ CHANGELOG.md            A running log of changes
 
 ## Credits
 
-- Fonts: Space Grotesk and JetBrains Mono (SIL Open Font License)
+- Fonts: Montserrat, Barlow Condensed and JetBrains Mono (SIL Open Font License)
 - 3D: Three.js (MIT license), included in `assets/vendor`
 - Icons: Simple Icons (CC0), Devicon (MIT) and Lucide (ISC)
 - Brand logos belong to their owners and are shown only to identify the tools used

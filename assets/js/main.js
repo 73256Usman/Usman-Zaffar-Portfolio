@@ -1,10 +1,10 @@
 import {
   profile, tracks, projects, filters, toolkit, methods, toolFilters,
   experience, education, bio, aboutTitle, credentials,
-} from "./data.js?v=202610312314";
-import { ico } from "./icons.js?v=202610312314";
-import { initScene } from "./scene.js?v=202610312314";
-import { initExtras, countUp } from "./extras.js?v=202610312314";
+} from "./data.js?v=202610312336";
+import { ico } from "./icons.js?v=202610312336";
+import { initScene } from "./scene.js?v=202610312336";
+import { initExtras, countUp } from "./extras.js?v=202610312336";
 
 const ghost = document.createElement("div"); // stands in for any element missing from the HTML, so one mismatch can never blank the page
 const $ = (s, r = document) => r.querySelector(s) || ghost;
@@ -88,11 +88,11 @@ function renderHero() {
   $("#promptText").textContent = t.prompt;
   $("#tagline").textContent = t.tagline;
   $("#intro").textContent = profile.intro;
-  $("#badge").textContent = profile.badge;
+  $("#badge").textContent = t.badge || profile.badge;
   $("#facts").innerHTML = profile.facts.map(([k, a, b]) =>
     `<li><span class="fact-k mono">${esc(k)}</span><b>${esc(a)}</b><span class="fact-s">${esc(b)}</span></li>`).join("");
   $("#strip").innerHTML = t.strip.map((x) => `<li>${esc(x)}</li>`).join("");
-  ["#tagline", "#strip"].forEach((x) => swapAnim($(x)));
+  ["#badge", "#strip"].forEach((x) => swapAnim($(x)));
 }
 
 /* ---------- work ---------- */
@@ -205,6 +205,15 @@ function renderExperience() {
 function renderAbout() {
   $("#aboutTitle").textContent = aboutTitle;
   $("#bio").innerHTML = bio.map((p) => `<p>${esc(p)}</p>`).join("");
+  // optional photo: shown only if the file exists
+  if (!profile.photo) return;
+  const probe = new Image();
+  probe.onload = () => {
+    const fig = $("#aboutPhoto"), img = $("img", fig);
+    img.src = profile.photo; img.alt = profile.photoAlt || "";
+    fig.hidden = false; $(".about-wrap").classList.add("has-photo");
+  };
+  probe.src = profile.photo;
 }
 
 /* ---------- education + certifications ---------- */
@@ -346,6 +355,7 @@ function initReveal() {
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
   }, { threshold: 0.08 });
+  $$(".wrap, .contact-grid").forEach((w) => { let i = 0; [...w.children].forEach((ch) => { const items = ch.classList.contains("reveal") ? [ch] : []; items.forEach((el) => el.style.setProperty("--i", Math.min(i++, 4))); }); });
   $$(".reveal").forEach((el) => io.observe(el));
   root.classList.add("js-reveal");
   // safety net: never leave content hidden

@@ -21,7 +21,7 @@ export async function initScene(canvas, fallback, hero) {
     const group = new THREE.Group();
     scene.add(group);
 
-    const COLORS = { cyber: 0xcfe8b0, it: 0xa8e3d6 };
+    const COLORS = { cyber: 0x8cc4ff, it: 0x7fe0cf };
     const ALERT = 0xff6b5e;
     let track = document.documentElement.dataset.track === "it" ? "it" : "cyber";
 
