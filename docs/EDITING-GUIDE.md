@@ -92,7 +92,7 @@ links: [{ label: "App Store", url: "https://apps.apple.com/us/app/your-app/id000
 - **Project cards, process steps, How I work cards:** these use small built in line icons. The names live in `assets/js/icons.js`. The choices are in `main.js` under `CYCLE_ICONS`, `CAP_ICONS` and `PROJECT_ICONS`. To change one, swap the name for another one listed in `icons.js`.
 - If an icon file is missing the tile simply disappears, so nothing breaks.
 
-## Screenshots inside a project card
+## Screenshots inside a project (shown in its details pop-up)
 
 Put the image in a new folder, for example `assets/shots/`, then add a `shots` list to the project in `data.js`:
 

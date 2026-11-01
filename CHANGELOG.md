@@ -2,6 +2,13 @@
 
 Keep a short note here each time you make a meaningful change. It helps future you remember what changed and why.
 
+## Layout stability and hero sizing
+
+- Nothing on the page moves when you click. Project cards now open in a dialog instead of expanding in the grid, filters dim the cards and tools that do not match instead of removing them, and every lab map panel shares one fixed-size box.
+- Hero: the 3D globe is anchored to the right edge of the content column at a size set by `--globe` in `assets/css/style.css`, so it looks the same on every desktop resolution. On tablet and phone it is a faint backdrop behind the headline.
+- Hero type and spacing also scale with screen height, so the first screen fits on common laptop and desktop sizes.
+- Education and certification tags use one shared style.
+
 ## 2026-10-31
 
 - Rebuilt the portfolio with a Cyber / IT switch.

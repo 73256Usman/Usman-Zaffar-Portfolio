@@ -1,10 +1,10 @@
 import {
   profile, tracks, projects, filters, toolkit, methods, toolFilters,
   experience, education, bio, aboutTitle, credentials,
-} from "./data.js?v=202610312336";
-import { ico } from "./icons.js?v=202610312336";
-import { initScene } from "./scene.js?v=202610312336";
-import { initExtras, countUp } from "./extras.js?v=202610312336";
+} from "./data.js?v=202610312359";
+import { ico } from "./icons.js?v=202610312359";
+import { initScene } from "./scene.js?v=202610312359";
+import { initExtras, countUp } from "./extras.js?v=202610312359";
 
 const ghost = document.createElement("div"); // stands in for any element missing from the HTML, so one mismatch can never blank the page
 const $ = (s, r = document) => r.querySelector(s) || ghost;
@@ -18,7 +18,7 @@ const store = {
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-const state = { track: "cyber", workFilter: "All work", toolFilter: "All tools", toolQuery: "", openCard: null };
+const state = { track: "cyber", workFilter: "All work", toolFilter: "All tools", toolQuery: "" };
 
 /* ---------- helpers ---------- */
 function showFor(item) { return item.track === "both" || item.track === state.track; }
@@ -106,29 +106,49 @@ function renderWork() {
   const t = tracks[state.track];
   $("#workTitle").textContent = t.workTitle;
   $("#workIntro").textContent = t.workIntro;
-  const items = projects.filter(showFor).filter((p) =>
-    state.workFilter === "All work" || p.tags.includes(state.workFilter));
-  $("#workCount").textContent = `${items.length} ${items.length === 1 ? "project" : "projects"}`;
-  const chev = `<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>`;
-  $("#cards").innerHTML = items.length ? items.map((p) => `
-    <article class="card" open-state="${state.openCard === p.id}" id="card-${p.id}">
-      <button class="card-head" aria-expanded="${state.openCard === p.id}" aria-controls="body-${p.id}" data-id="${p.id}">
+  const mine = projects.filter(showFor);
+  const match = (p) => state.workFilter === "All work" || p.tags.includes(state.workFilter);
+  const n = mine.filter(match).length;
+  $("#workCount").textContent = `${n} ${n === 1 ? "project" : "projects"}`;
+  const arrow = `<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>`;
+  // Every project card always stays in the grid (cards that don't match the filter are dimmed),
+  // and the details open in a dialog, so nothing on the page ever moves when you click.
+  $("#cards").innerHTML = mine.map((p) => `
+    <article class="card${match(p) ? "" : " dim"}" id="card-${p.id}"${match(p) ? "" : " inert"}>
+      <button class="card-head" type="button" aria-haspopup="dialog" data-id="${p.id}">
         <span class="card-top"><span class="card-ico">${ico(PROJECT_ICONS[p.id], 20)}</span><span class="card-meta">${esc(p.meta)}</span></span>
-        <span class="card-title-row"><span class="card-title">${esc(p.title)}</span>${chev}</span>
+        <span class="card-title-row"><span class="card-title">${esc(p.title)}</span>${arrow}</span>
         <ul class="flow" aria-hidden="true">${p.flow.map((s, i) => `<li><b>0${i + 1}</b>${esc(s)}</li>`).join("")}</ul>
         <ul class="tags">${p.tags.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
       </button>
-      <div class="card-body" id="body-${p.id}"><div><div class="card-inner">
-        <div class="card-inner-grid">
-          <div><p>${esc(p.summary)}</p>${(p.shots || []).length ? `<div class="shots">${p.shots.map((x) => `<figure><img src="${esc(x.src)}" alt="${esc(x.alt || "")}" loading="lazy" decoding="async" onerror="this.parentNode.remove()" />${x.caption ? `<figcaption>${esc(x.caption)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}<h4>TOOLS</h4>
-          <ul class="tags">${p.tools.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>
-          <div><h4>WHAT I DID</h4>
-          <ul class="did">${p.did.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>
-          ${(p.links || []).length ? `<h4>LINKS</h4><ul class="card-links">${p.links.map((l) => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)} <span aria-hidden="true">↗</span></a></li>`).join("")}</ul>` : ""}</div>
-        </div>
-      </div></div></div>
-    </article>`).join("") : `<p class="empty">Nothing matches that filter yet.</p>`;
+    </article>`).join("");
 }
+
+function projectDialogHtml(p) {
+  return `
+    <div class="pd-top"><span class="card-ico">${ico(PROJECT_ICONS[p.id], 20)}</span><span class="card-meta">${esc(p.meta)}</span>
+      <button class="pd-close" type="button" data-close aria-label="Close project details">${ico("x", 18)}</button></div>
+    <h3 class="pd-title" id="pdTitle">${esc(p.title)}</h3>
+    <ul class="flow" aria-hidden="true">${p.flow.map((s, i) => `<li><b>0${i + 1}</b>${esc(s)}</li>`).join("")}</ul>
+    <div class="card-inner-grid">
+      <div><p>${esc(p.summary)}</p>${(p.shots || []).length ? `<div class="shots">${p.shots.map((x) => `<figure><img src="${esc(x.src)}" alt="${esc(x.alt || "")}" loading="lazy" decoding="async" onerror="this.parentNode.remove()" />${x.caption ? `<figcaption>${esc(x.caption)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}<h4>TOOLS</h4>
+      <ul class="tags">${p.tools.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>
+      <div><h4>WHAT I DID</h4>
+      <ul class="did">${p.did.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>
+      ${(p.links || []).length ? `<h4>LINKS</h4><ul class="card-links">${p.links.map((l) => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)} <span aria-hidden="true">↗</span></a></li>`).join("")}</ul>` : ""}</div>
+    </div>`;
+}
+let dialogOpener = null;
+function showProject(p, opener) {
+  const dlg = $("#projDialog"); if (!dlg || !dlg.showModal) return;
+  dialogOpener = opener || document.activeElement;
+  dlg.innerHTML = `<div class="pd-box">${projectDialogHtml(p)}</div>`;
+  dlg.setAttribute("aria-labelledby", "pdTitle");
+  dlg.scrollTop = 0;
+  if (!dlg.open) dlg.showModal();
+  root.classList.add("modal-open");
+}
+function closeProject() { const dlg = $("#projDialog"); if (dlg?.open) dlg.close(); }
 
 /* ---------- capabilities ---------- */
 function renderCaps() {
@@ -150,17 +170,18 @@ function renderToolFilters() {
 }
 function renderTools() {
   const q = state.toolQuery.trim().toLowerCase();
-  const items = toolkit.filter(([n, g, tr]) =>
-    (tr === "both" || tr === state.track) &&
-    (state.toolFilter === "All tools" || g === state.toolFilter) &&
-    (!q || n.toLowerCase().includes(q) || g.toLowerCase().includes(q)));
-  $("#toolCount").textContent = `${items.length} tool${items.length === 1 ? "" : "s"}`;
-  $("#tools").innerHTML = items.map(([n, g, , icon]) => `
-    <li class="tool">
+  const mine = toolkit.filter(([, , tr]) => tr === "both" || tr === state.track);
+  const match = ([n, g]) => (state.toolFilter === "All tools" || g === state.toolFilter) &&
+    (!q || n.toLowerCase().includes(q) || g.toLowerCase().includes(q));
+  const count = mine.filter(match).length;
+  $("#toolCount").textContent = `${count} tool${count === 1 ? "" : "s"}`;
+  // Same idea as the project cards: tools that don't match are dimmed, not removed, so the grid never reflows.
+  $("#tools").innerHTML = mine.map((t) => { const [n, g, , icon] = t, on = match(t); return `
+    <li class="tool${on ? "" : " dim"}"${on ? "" : ' aria-hidden="true"'}>
       <span class="tool-icon" aria-hidden="true"><img src="assets/icons/${esc(icon)}.svg" alt="" width="40" height="40" loading="lazy" decoding="async" onerror="this.remove()" /></span>
       <span class="tool-name">${esc(n)}</span>
       <span class="tool-group">${esc(g.toUpperCase())}</span>
-    </li>`).join("");
+    </li>`; }).join("");
   $("#methods").innerHTML = methods[state.track].map((m) => `<li>${esc(m)}</li>`).join("");
 }
 
@@ -220,11 +241,11 @@ function renderAbout() {
 function renderCreds() {
   $("#education").innerHTML = education.map((e) => `
     <li class="reveal"><div class="head">${logo(e.logo)}<div><b>${esc(e.degree)}</b><p class="school">${esc(e.school)}</p></div></div><p class="note">${esc(e.note)}</p>
-    <div class="row"><span class="pill on">${esc(e.dates)}</span>${e.extra ? `<span class="pill">${esc(e.extra)}</span>` : ""}</div></li>`).join("");
+    <p class="edu-meta">${esc(e.dates)}${e.extra ? ` <span aria-hidden="true">·</span> ${esc(e.extra)}` : ""}</p></li>`).join("");
   $("#creds").innerHTML = credentials.map((c) => `
     <div class="cred reveal">
       <div class="cred-top"><span class="cred-issuer">${logo(c.logo)}${esc(c.issuer.toUpperCase())}</span><span class="pill ${c.earned ? "on" : ""}">${esc(c.status)}</span></div>
-      <h3>${esc(c.name)}</h3><p class="cred-area">${esc(c.area)}</p>
+      <h3>${esc(c.name).replace(/(\S*-\S*)/g, '<span class="nb">$1</span>')}</h3><p class="cred-area">${esc(c.area)}</p>
     </div>`).join("");
 }
 function renderContact() {
@@ -240,7 +261,7 @@ function setTrack(next, { initial = false } = {}) {
   root.dataset.track = next;
   store.set("track", next);
   $$("[data-track-btn]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.trackBtn === next)));
-  state.openCard = null;
+  closeProject();
   renderHero(); renderFilters(); renderWork(); renderCaps(); renderToolFilters();
   renderTools(); renderExperience(); renderAbout(); renderContact(); renderResume();
   probeResume(next);
@@ -292,9 +313,7 @@ function initPalette() {
 }
 function openProject(p) {
   if (p.track !== "both" && p.track !== state.track) setTrack(p.track);
-  state.workFilter = "All work"; renderFilters();
-  state.openCard = p.id; renderWork();
-  $(`#card-${p.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+  showProject(p, $(`#card-${p.id} .card-head`));
 }
 
 /* ---------- events ---------- */
@@ -303,17 +322,17 @@ function bindEvents() {
 
   $("#workFilters").addEventListener("click", (e) => {
     const b = e.target.closest("[data-f]"); if (!b) return;
-    state.workFilter = b.dataset.f; state.openCard = null; renderFilters(); renderWork();
+    state.workFilter = b.dataset.f; renderFilters(); renderWork();
   });
   $("#cards").addEventListener("click", (e) => {
     const h = e.target.closest(".card-head"); if (!h) return;
-    state.openCard = state.openCard === h.dataset.id ? null : h.dataset.id;
-    $$(".card").forEach((c) => {
-      const on = c.id === `card-${state.openCard}`;
-      c.setAttribute("open-state", String(on));
-      $(".card-head", c).setAttribute("aria-expanded", String(on));
-    });
+    const p = projects.find((x) => x.id === h.dataset.id); if (p) showProject(p, h);
   });
+  const dlg = $("#projDialog");
+  if (dlg) {
+    dlg.addEventListener("click", (e) => { if (e.target === dlg || e.target.closest("[data-close]")) closeProject(); });
+    dlg.addEventListener("close", () => { root.classList.remove("modal-open"); try { dialogOpener?.focus({ preventScroll: true }); } catch { /* ignore */ } });
+  }
   $("#toolFilters").addEventListener("click", (e) => {
     const b = e.target.closest("[data-f]"); if (!b) return;
     state.toolFilter = b.dataset.f; renderToolFilters(); renderTools();

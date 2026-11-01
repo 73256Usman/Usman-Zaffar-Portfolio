@@ -1,7 +1,7 @@
 // Interactive extras: the lab map, the example walkthrough, the scroll progress bar and the view switch sweep.
 // Everything here is decoration or explanation. If any part fails, the rest of the site is unaffected.
 // To change the text of the lab map or the walkthrough, edit the LABS and WALK objects below.
-import { ico } from "./icons.js?v=202610312336";
+import { ico } from "./icons.js?v=202610312359";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -90,19 +90,35 @@ function paintLab() {
   $("#labTitle").textContent = L.title;
   $("#labIntro").textContent = L.intro;
   $("#labSvgs").innerHTML = mapSvg(track, "wide") + mapSvg(track, "tall");
+  $("#labPanel").innerHTML = "";
   selectNode(L.nodes[0].id);
 }
 
+function panelHtml(n) {
+  return `<div class="lab-slide" data-id="${n.id}">
+    <div class="lab-panel-head"><span class="lab-panel-ico">${ico(n.icon, 22)}</span><div><h4>${esc(n.name)}</h4><p class="mono">${esc(n.sub)}</p></div></div>
+    <p class="lab-text">${esc(n.text)}</p>
+    <ul class="tags">${n.tools.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
+    <button class="btn btn-ghost btn-sm" type="button" data-project="${esc(n.project)}" tabindex="-1">View the project</button>
+  </div>`;
+}
+
+// Every node's panel is rendered once and stacked in the same grid cell, so the box is always as
+// tall as the longest one. Clicking a node only changes which one is visible, nothing below moves.
 function selectNode(id) {
   const L = LABS[labState.track], n = L.nodes.find((x) => x.id === id); if (!n) return;
   labState.sel = id;
   $$(".lab-node").forEach((g) => g.classList.toggle("on", g.dataset.id === id));
   $$(".lab-link").forEach((g) => g.classList.toggle("on", g.dataset.a === id || g.dataset.b === id));
-  $("#labPanel").innerHTML = `
-    <div class="lab-panel-head"><span class="lab-panel-ico">${ico(n.icon, 22)}</span><div><h4>${esc(n.name)}</h4><p class="mono">${esc(n.sub)}</p></div></div>
-    <p>${esc(n.text)}</p>
-    <ul class="tags">${n.tools.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
-    <button class="btn btn-ghost btn-sm" type="button" data-project="${esc(n.project)}">View the project</button>`;
+  const panel = $("#labPanel");
+  if (!panel.querySelector(".lab-slide")) panel.innerHTML = L.nodes.map(panelHtml).join("");
+  $$(".lab-slide", panel).forEach((el) => {
+    const on = el.dataset.id === id;
+    el.classList.toggle("on", on);
+    if (on) el.removeAttribute("inert"); else el.setAttribute("inert", "");
+    el.setAttribute("aria-hidden", on ? "false" : "true");
+    const btn = el.querySelector("button"); if (btn) btn.tabIndex = on ? 0 : -1;
+  });
 }
 
 function initLab(opts) {
