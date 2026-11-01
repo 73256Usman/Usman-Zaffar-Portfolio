@@ -12,25 +12,27 @@
   <meta property="og:description" content="Security operations, SOC labs and hands-on IT support. Cyber and IT views of one portfolio." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://73256usman.github.io/Usman-Zaffar-Portfolio/" />
-  <meta property="og:image" content="https://73256usman.github.io/Usman-Zaffar-Portfolio/og-image.png?v=202610312140" />
+  <meta property="og:image" content="https://73256usman.github.io/Usman-Zaffar-Portfolio/og-image.png?v=202610312314" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Usman Zaffar, Cybersecurity and IT portfolio" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://73256usman.github.io/Usman-Zaffar-Portfolio/og-image.png?v=202610312140" />
+  <meta name="twitter:image" content="https://73256usman.github.io/Usman-Zaffar-Portfolio/og-image.png?v=202610312314" />
   <!-- Tab icons. Absolute URLs so they also work when the page is opened from LinkedIn, email or a link preview. -->
-  <link rel="icon" href="https://73256usman.github.io/Usman-Zaffar-Portfolio/favicon.ico?v=202610312140" sizes="48x48" />
-  <link rel="icon" href="https://73256usman.github.io/Usman-Zaffar-Portfolio/favicon.svg?v=202610312140" type="image/svg+xml" />
-  <link rel="icon" href="https://73256usman.github.io/Usman-Zaffar-Portfolio/favicon-32x32.png?v=202610312140" type="image/png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="https://73256usman.github.io/Usman-Zaffar-Portfolio/apple-touch-icon.png?v=202610312140" />
+  <link rel="icon" href="https://73256usman.github.io/Usman-Zaffar-Portfolio/favicon.ico?v=202610312314" sizes="48x48" />
+  <link rel="icon" href="https://73256usman.github.io/Usman-Zaffar-Portfolio/favicon.svg?v=202610312314" type="image/svg+xml" />
+  <link rel="icon" href="https://73256usman.github.io/Usman-Zaffar-Portfolio/favicon-32x32.png?v=202610312314" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="https://73256usman.github.io/Usman-Zaffar-Portfolio/apple-touch-icon.png?v=202610312314" />
   <link rel="manifest" href="site.webmanifest" />
   <link rel="preload" href="assets/fonts/space-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="assets/css/style.css?v=202610312140" />
+  <link rel="stylesheet" href="assets/css/style.css?v=202610312314" />
   <script type="importmap">
     { "imports": { "three": "./assets/vendor/three.module.min.js" } }
   </script>
 </head>
 <body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="sweep" id="sweep" aria-hidden="true"></div>
   <a class="skip" href="#main">Skip to content</a>
   <div class="grain" aria-hidden="true"></div>
   <div class="glow" id="glow" aria-hidden="true"></div>
@@ -165,6 +167,16 @@
         <div class="chips reveal" id="workFilters" role="group" aria-label="Filter projects"></div>
         <p class="count mono" id="workCount" aria-live="polite"></p>
         <div class="cards" id="cards"></div>
+
+        <div class="labmap reveal" id="labmap">
+          <p class="mini mono">LAB MAP</p>
+          <h3 class="lab-title" id="labTitle"></h3>
+          <p class="sub" id="labIntro"></p>
+          <div class="lab-grid">
+            <div class="lab-svgs" id="labSvgs"></div>
+            <div class="lab-panel" id="labPanel" aria-live="polite"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -175,6 +187,20 @@
         <h2 class="reveal" id="capTitle"></h2>
         <p class="sub reveal" id="capIntro"></p>
         <ol class="cycle mono reveal" id="cycle" aria-label="Workflow cycle"></ol>
+        <div class="walk reveal" id="walk">
+          <div class="walk-bar">
+            <span class="walk-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="walk-head mono" id="walkHead"></span>
+            <span class="walk-badge mono" id="walkBadge"></span>
+          </div>
+          <div class="walk-status-row"><span class="mono walk-label">STATUS</span><span class="walk-status mono" id="walkStatus"></span></div>
+          <ol class="walk-log mono" id="walkLog"></ol>
+          <div class="walk-ctl">
+            <button type="button" class="walk-play" id="walkPlay" aria-label="Pause the walkthrough"></button>
+            <div class="walk-steps" id="walkDots" role="group" aria-label="Walkthrough steps"></div>
+            <span class="walk-note mono">Made up example to show the steps</span>
+          </div>
+        </div>
         <div class="cols" id="caps"></div>
       </div>
     </section>
@@ -240,6 +266,6 @@
 
   <noscript><p style="padding:24px;color:#ddd">This portfolio needs JavaScript to display its content. You can find my work on <a href="https://github.com/73256Usman" style="color:#cfe8b0">GitHub</a>.</p></noscript>
 
-  <script type="module" src="assets/js/main.js?v=202610312140"></script>
+  <script type="module" src="assets/js/main.js?v=202610312314"></script>
 </body>
 </html>

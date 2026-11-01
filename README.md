@@ -77,6 +77,8 @@ assets/
   js/data.js            All content (edit this most often)
   js/main.js            Page logic: filters, view switch, search palette
   js/scene.js           The 3D network in the hero
+  js/extras.js          Lab map, example walkthrough, progress bar
+  js/icons.js           Small inline icons
   icons/                Tool logos and icons (SVG)
   fonts/                Self-hosted fonts
   vendor/               Three.js (3D library) and its license

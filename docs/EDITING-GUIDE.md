@@ -92,6 +92,22 @@ links: [{ label: "App Store", url: "https://apps.apple.com/us/app/your-app/id000
 - **Project cards, process steps, How I work cards:** these use small built in line icons. The names live in `assets/js/icons.js`. The choices are in `main.js` under `CYCLE_ICONS`, `CAP_ICONS` and `PROJECT_ICONS`. To change one, swap the name for another one listed in `icons.js`.
 - If an icon file is missing the tile simply disappears, so nothing breaks.
 
+## Screenshots inside a project card
+
+Put the image in a new folder, for example `assets/shots/`, then add a `shots` list to the project in `data.js`:
+
+```js
+shots: [
+  { src: "assets/shots/wazuh-alerts.png", alt: "Wazuh alert list from my lab", caption: "Wazuh alerts from the lab" },
+],
+```
+
+Remove usernames, IP addresses and anything private before adding a screenshot. If the file is missing the picture is skipped and nothing breaks.
+
+## Lab map and example walkthrough
+
+Both live in `assets/js/extras.js`. The lab map text is in the `LABS` object (one version for Cyber, one for IT). Each box has a name, a short line, a description, tools and the project it links to. The walkthrough text is in the `WALK` object. It is a made up example, and the page says so. Keep it that way so nobody mistakes it for a real incident.
+
 ## 5. Add a tool and its icon
 
 Find `export const toolkit`. Each line is `[name, group, track, icon]`:

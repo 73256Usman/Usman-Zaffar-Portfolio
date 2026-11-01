@@ -1,9 +1,10 @@
 import {
   profile, tracks, projects, filters, toolkit, methods, toolFilters,
   experience, education, bio, aboutTitle, credentials,
-} from "./data.js?v=202610312140";
-import { ico } from "./icons.js?v=202610312140";
-import { initScene } from "./scene.js?v=202610312140";
+} from "./data.js?v=202610312314";
+import { ico } from "./icons.js?v=202610312314";
+import { initScene } from "./scene.js?v=202610312314";
+import { initExtras, countUp } from "./extras.js?v=202610312314";
 
 const ghost = document.createElement("div"); // stands in for any element missing from the HTML, so one mismatch can never blank the page
 const $ = (s, r = document) => r.querySelector(s) || ghost;
@@ -119,7 +120,7 @@ function renderWork() {
       </button>
       <div class="card-body" id="body-${p.id}"><div><div class="card-inner">
         <div class="card-inner-grid">
-          <div><p>${esc(p.summary)}</p><h4>TOOLS</h4>
+          <div><p>${esc(p.summary)}</p>${(p.shots || []).length ? `<div class="shots">${p.shots.map((x) => `<figure><img src="${esc(x.src)}" alt="${esc(x.alt || "")}" loading="lazy" decoding="async" onerror="this.parentNode.remove()" />${x.caption ? `<figcaption>${esc(x.caption)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}<h4>TOOLS</h4>
           <ul class="tags">${p.tools.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>
           <div><h4>WHAT I DID</h4>
           <ul class="did">${p.did.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>
@@ -197,6 +198,7 @@ function renderExperience() {
       <div class="job-stat"><b>${esc(j.stat[0])}</b><span>${esc(j.stat[1])}</span></div>
     </li>`).join("");
   swapAnim($("#timeline"));
+  $$(".job-stat b").forEach(countUp);
 }
 
 /* ---------- about ---------- */
@@ -359,6 +361,7 @@ const urlTrack = new URLSearchParams(location.search).get("track");
 safe("content", () => setTrack(tracks[urlTrack] ? urlTrack : store.get("track") || "cyber", { initial: true }));
 safe("events", bindEvents);
 safe("palette", initPalette);
+safe("extras", () => initExtras({ getTrack: () => state.track, openProject: (id) => { const p = projects.find((x) => x.id === id); if (p) openProject(p); } }));
 safe("reveal", initReveal);
 
 // smooth scrolling only after load, so a refresh never animates the page

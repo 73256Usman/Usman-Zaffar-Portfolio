@@ -40,6 +40,10 @@ GitHub Pages lets browsers cache each file for about 10 minutes. To stop visitor
 - Layout tested from 360 pixel wide phones to 2560 pixel monitors, including iPad portrait and landscape. Touch screens get larger tap targets.
 - The page needs no external requests. Fonts, icons and the 3D library are all stored in the repo.
 
+## Interactive extras (`extras.js`)
+
+The lab map, the example walkthrough, the scroll progress bar, the switch sweep and the count up live in `assets/js/extras.js`. It is loaded by `main.js` and wrapped so that if it ever fails, the rest of the site still works. The moving packets and the walkthrough pause when they are off screen, and every animation is turned off for visitors who prefer reduced motion.
+
 ## Tab icon and link preview
 
 Files in the project root: `favicon.ico`, `favicon.svg`, `favicon-32x32.png`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, `site.webmanifest` and `og-image.png` (the 1200x630 preview card shown when the link is shared).
