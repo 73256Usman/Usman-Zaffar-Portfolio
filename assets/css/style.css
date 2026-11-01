@@ -406,3 +406,37 @@ h2 { font-size: clamp(36px, 5.6vw, 68px); font-weight: 500; letter-spacing: -0.0
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
   .js-reveal .reveal { opacity: 1; transform: none; }
 }
+
+/* Logo tiles for experience, education and certifications (like LinkedIn) */
+.logo { flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line-strong); }
+.logo img { width: 28px; height: 28px; object-fit: contain; }
+.head { display: flex; align-items: center; gap: 16px; }
+.head > div { min-width: 0; }
+.job .head { align-items: flex-start; }
+.cred-issuer { display: inline-flex; align-items: center; gap: 12px; }
+.cred .logo { width: 44px; height: 44px; border-radius: 10px; }
+.cred .logo img { width: 24px; height: 24px; }
+@media (max-width: 640px) { .logo { width: 46px; height: 46px; } .job .head { gap: 12px; } }
+
+/* Inline line icons: process steps, how-I-work cards, project cards, contact */
+.ico { flex: none; display: block; }
+.cycle li { align-items: center; }
+.cycle li .ico { color: var(--accent); width: 16px; height: 16px; }
+.col-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.col-ico { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line-strong); background: var(--bg); color: var(--accent); }
+.card-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.card-ico { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--line-strong); background: var(--bg); color: var(--accent); }
+.card-meta { min-width: 0; overflow-wrap: anywhere; }
+.email-row .email-ico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--accent); }
+.email-row { gap: 12px 14px; }
+.social a { color: var(--dim); }
+.social a .ico { color: var(--accent); }
+
+/* Process steps become a tidy grid on tablets and phones, so no connector line is left dangling after a wrap */
+@media (max-width: 1100px) {
+  .cycle { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .cycle li { margin-right: 0; border-radius: 10px; }
+  .cycle li:not(:last-child)::after { display: none; }
+  .cycle li:last-child::after { left: auto; right: 12px; }
+}
+@media (max-width: 640px) { .cycle { grid-template-columns: 1fr 1fr; } }

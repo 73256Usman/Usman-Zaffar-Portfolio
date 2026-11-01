@@ -29,7 +29,7 @@ export const tracks = {
   cyber: {
     label: "Cyber",
     prompt: "usman@portfolio:~$ whoami --track cyber",
-    tagline: "DETECT. INVESTIGATE. DEFEND.",
+    tagline: "SECURITY OPERATIONS AND BLUE TEAM",
     pillars: [
       ["01 / DETECT", "Turn raw logs into signal."],
       ["02 / INVESTIGATE", "Follow the evidence end to end."],
@@ -39,25 +39,25 @@ export const tracks = {
     strip: ["SOC", "BLUE TEAM", "VULN MGMT", "AI SECURITY"],
     workTitle: "Security projects and labs.",
     workIntro:
-      "Hands-on work that shows how I approach security and IT problems. Select a card for details.",
+      "Labs and projects I have built and run myself. Open a card to see what I did.",
     capTitle: "The security cycle.",
-    capIntro: "A repeatable process for every incident.",
+    capIntro: "The steps I follow on an incident, from the first alert to the follow up.",
     cycle: ["Detect", "Triage", "Investigate", "Contain", "Recover", "Improve"],
     caps: [
       {
         n: "01",
         title: "Detect and triage",
-        text: "Find real threats in the noise and prioritize them.",
+        text: "Sort real threats from background noise and decide what to look at first.",
       },
       {
         n: "02",
         title: "Investigate and respond",
-        text: "Scope the issue, contain it, and document every step.",
+        text: "Work out how far it reaches, contain it, and write down every step.",
       },
       {
         n: "03",
         title: "Harden and verify",
-        text: "Fix the root cause, then retest to confirm.",
+        text: "Fix the cause, then test again to make sure it worked.",
       },
     ],
     expTitle: "Work experience.",
@@ -66,7 +66,7 @@ export const tracks = {
   it: {
     label: "IT",
     prompt: "usman@portfolio:~$ whoami --track it",
-    tagline: "SUPPORT. FIX. DOCUMENT.",
+    tagline: "IT SUPPORT AND SYSTEMS ADMINISTRATION",
     pillars: [
       ["01 / SUPPORT", "Get people working again."],
       ["02 / ADMINISTER", "Users, devices and policy."],
@@ -76,25 +76,25 @@ export const tracks = {
     strip: ["HELP DESK", "WINDOWS", "MACOS", "ACTIVE DIRECTORY"],
     workTitle: "IT projects and labs.",
     workIntro:
-      "Hands-on work that shows how I approach security and IT problems. Select a card for details.",
+      "Labs and projects I have built and run myself. Open a card to see what I did.",
     capTitle: "The support cycle.",
-    capIntro: "A repeatable process for every request.",
+    capIntro: "The steps I follow on a support request, from the first call to the follow up.",
     cycle: ["Intake", "Diagnose", "Resolve", "Verify", "Document", "Prevent"],
     caps: [
       {
         n: "01",
         title: "Intake and diagnose",
-        text: "Understand the issue and find the root cause.",
+        text: "Ask the right questions and find what is actually causing the problem.",
       },
       {
         n: "02",
         title: "Resolve and restore",
-        text: "Fix it and confirm the user is back to work.",
+        text: "Fix it and check with the user that they can get back to work.",
       },
       {
         n: "03",
         title: "Document and prevent",
-        text: "Record the fix and automate repeat issues.",
+        text: "Write up the fix and script the problems that keep coming back.",
       },
     ],
     expTitle: "Work experience.",
@@ -162,7 +162,7 @@ export const projects = [
     tags: ["Blue team", "Phishing"],
     flow: ["Alert", "Packet capture", "Pivot", "Write-up"],
     summary:
-      "Guided SOC style investigations that build the day to day habits of an analyst.",
+      "Guided SOC investigations that build the habits an analyst uses every day.",
     did: [
       "Hunted threats through logs and telemetry.",
       "Analyzed traffic in Wireshark to follow suspicious activity.",
@@ -178,7 +178,7 @@ export const projects = [
     tags: ["AI security", "Python"],
     flow: ["Vulnerable agent", "Attacks", "Hardening", "Retest"],
     summary:
-      "A Python lab around AI agent security: build a tool using agent, attack it, then rebuild it with proper controls.",
+      "A Python lab around AI agent security: build an agent that can use tools, attack it, then rebuild it with proper controls.",
     did: [
       "Building a deliberately vulnerable agent that can call tools.",
       "Planning attacks against it, then a hardened rebuild to compare results.",
@@ -229,8 +229,8 @@ export const projects = [
       "A functional hardware keylogger built to understand physical attack paths and how to defend against them.",
     did: [
       "Built the device to study how physical implants behave.",
-      "Looked at how device control, logging and awareness training reduce the risk.",
-      "Used the project to sharpen my endpoint protection thinking.",
+      "Looked at how device control, logging and user awareness reduce the risk.",
+      "Used the project to get better at thinking about endpoint protection.",
     ],
     tools: ["Hardware security", "Endpoint protection", "Device control"],
   },
@@ -245,8 +245,8 @@ export const projects = [
       "A simulated help desk environment for practicing support and administration across Windows systems.",
     did: [
       "Built a Windows environment with Active Directory and Windows Server.",
-      "Practiced real world support skills, system administration and troubleshooting.",
-      "Worked across Windows based systems the way a help desk would.",
+      "Practiced support, system administration and troubleshooting.",
+      "Handled issues the way a help desk would.",
     ],
     tools: ["Windows Server", "Active Directory", "Troubleshooting"],
   },
@@ -353,6 +353,7 @@ export const toolFilters = {
 export const experience = [
   {
     id: "geeks",
+    logo: "org-geeks",
     dates: "Nov 2025 to Present",
     kind: "Contract · 1099",
     role: "On-call IT Technician (Level 2)",
@@ -367,6 +368,7 @@ export const experience = [
   },
   {
     id: "ios-exp",
+    logo: "org-ios",
     dates: "2025 to Present",
     kind: "Self-employed",
     role: "Independent iOS App Developer",
@@ -380,6 +382,7 @@ export const experience = [
   },
   {
     id: "metro",
+    logo: "org-metro",
     dates: "Nov 2023 to Aug 2025",
     kind: "Security operations",
     role: "Security Operations Analyst",
@@ -394,6 +397,7 @@ export const experience = [
   },
   {
     id: "mastercard",
+    logo: "org-mastercard",
     dates: "Nov 2025",
     kind: "Virtual job simulation · Forage",
     role: "Cybersecurity Analyst Simulation",
@@ -411,6 +415,7 @@ export const experience = [
 export const education = [
   {
     school: "New Jersey Institute of Technology",
+    logo: "org-njit",
     degree: "B.S. Information Technology",
     note: "Concentrations in Cybersecurity, Network & Information Systems, and Database Management",
     dates: "Expected Summer 2027",
@@ -418,6 +423,7 @@ export const education = [
   },
   {
     school: "Middlesex College",
+    logo: "org-middlesex",
     degree: "A.S. Business Information Systems",
     note: "Completed",
     dates: "Jun 2025",
@@ -435,13 +441,14 @@ export const skillGroups = [
 export const aboutTitle = "About me.";
 
 export const bio = [
-  "I am a senior at NJIT studying Information Technology, and I hold CompTIA Security+. I have worked in both security operations and hands-on IT support, and I enjoy roles that let me use both.",
-  "At Metro One I monitored access and investigated incidents for a busy warehouse site. Today I work on call as a Level 2 technician and build my own iOS apps. At home I run labs covering Active Directory, Wazuh, Nessus and AI agent security.",
+  "I'm a senior at NJIT studying Information Technology, and I hold CompTIA Security+. I've worked in security operations and in hands-on IT support, and I'm looking for a role that uses both.",
+  "At Metro One I monitored access and investigated incidents at a busy warehouse. Right now I work on call as a Level 2 technician and build iOS apps on my own. At home I run labs for Active Directory, Wazuh, Nessus and AI agent security.",
 ];
 
 export const credentials = [
   {
     name: "CompTIA Security+",
+    logo: "org-comptia",
     issuer: "CompTIA",
     area: "Cybersecurity",
     status: "Earned",
@@ -449,6 +456,7 @@ export const credentials = [
   },
   {
     name: "Microsoft Azure Fundamentals (AZ-900)",
+    logo: "org-microsoft",
     issuer: "Microsoft",
     area: "Cloud",
     status: "Planned",

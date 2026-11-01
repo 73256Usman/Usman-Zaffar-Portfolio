@@ -86,6 +86,12 @@ Add one project per app, using `track: "it"` (or `"both"`), a one line summary, 
 links: [{ label: "App Store", url: "https://apps.apple.com/us/app/your-app/id000000000" }],
 ```
 
+## Icons next to jobs, schools, certifications and projects
+
+- **Jobs, schools, certifications:** each entry in `data.js` has a `logo:` line, for example `logo: "org-njit"`. The value is a file name in `assets/icons/` without `.svg`. To use a real company logo, save it there (for example `org-geeks.svg` or `.png` renamed to `.svg` is not allowed, so use an SVG) and keep the same name, or point `logo:` at the new file name.
+- **Project cards, process steps, How I work cards:** these use small built in line icons. The names live in `assets/js/icons.js`. The choices are in `main.js` under `CYCLE_ICONS`, `CAP_ICONS` and `PROJECT_ICONS`. To change one, swap the name for another one listed in `icons.js`.
+- If an icon file is missing the tile simply disappears, so nothing breaks.
+
 ## 5. Add a tool and its icon
 
 Find `export const toolkit`. Each line is `[name, group, track, icon]`:

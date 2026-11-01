@@ -1,8 +1,9 @@
 import {
   profile, tracks, projects, filters, toolkit, methods, toolFilters,
   experience, education, bio, aboutTitle, credentials,
-} from "./data.js?v=202610311828";
-import { initScene } from "./scene.js?v=202610311828";
+} from "./data.js?v=202610312140";
+import { ico } from "./icons.js?v=202610312140";
+import { initScene } from "./scene.js?v=202610312140";
 
 const ghost = document.createElement("div"); // stands in for any element missing from the HTML, so one mismatch can never blank the page
 const $ = (s, r = document) => r.querySelector(s) || ghost;
@@ -38,6 +39,9 @@ function initLinks() {
   const mail = $("#emailLink");
   mail.href = `mailto:${profile.email}`;
   mail.textContent = profile.email;
+  $("#ghLink2").innerHTML = `${ico("github", 18)}GitHub`;
+  $("#liLink2").innerHTML = `${ico("contact-round", 18)}LinkedIn`;
+  $(".email-ico").innerHTML = ico("mail", 20);
   $("#year").textContent = `© ${new Date().getFullYear()}`;
   $("#copyEmail").addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(profile.email); toast("Email copied"); }
@@ -73,7 +77,8 @@ function renderResume() {
   actions.innerHTML = ok
     ? `<a class="btn btn-primary" href="${esc(url)}" download>Download resume</a><a class="btn btn-ghost" href="${esc(url)}" target="_blank" rel="noopener">View PDF</a>`
     : "";
-  $("#fileNote").hidden = ok;
+  $("#fileNote").hidden = true;
+  $("#fileCard").hidden = !ok;
 }
 
 /* ---------- hero ---------- */
@@ -102,12 +107,12 @@ function renderWork() {
   $("#workIntro").textContent = t.workIntro;
   const items = projects.filter(showFor).filter((p) =>
     state.workFilter === "All work" || p.tags.includes(state.workFilter));
-  $("#workCount").textContent = `${items.length} case ${items.length === 1 ? "study" : "studies"}`;
+  $("#workCount").textContent = `${items.length} ${items.length === 1 ? "project" : "projects"}`;
   const chev = `<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>`;
   $("#cards").innerHTML = items.length ? items.map((p) => `
     <article class="card" open-state="${state.openCard === p.id}" id="card-${p.id}">
       <button class="card-head" aria-expanded="${state.openCard === p.id}" aria-controls="body-${p.id}" data-id="${p.id}">
-        <span class="card-meta">${esc(p.meta)}</span>
+        <span class="card-top"><span class="card-ico">${ico(PROJECT_ICONS[p.id], 20)}</span><span class="card-meta">${esc(p.meta)}</span></span>
         <span class="card-title-row"><span class="card-title">${esc(p.title)}</span>${chev}</span>
         <ul class="flow" aria-hidden="true">${p.flow.map((s, i) => `<li><b>0${i + 1}</b>${esc(s)}</li>`).join("")}</ul>
         <ul class="tags">${p.tags.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
@@ -129,9 +134,9 @@ function renderCaps() {
   const t = tracks[state.track];
   $("#capTitle").textContent = t.capTitle;
   $("#capIntro").textContent = t.capIntro;
-  $("#cycle").innerHTML = t.cycle.map((c, i) => `<li><span>0${i + 1}</span>${esc(c)}</li>`).join("");
-  $("#caps").innerHTML = t.caps.map((c) => `
-    <div class="col"><span class="n">${esc(c.n)}</span><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p></div>`).join("");
+  $("#cycle").innerHTML = t.cycle.map((c, i) => `<li>${ico((CYCLE_ICONS[state.track] || [])[i], 16)}<span>0${i + 1}</span>${esc(c)}</li>`).join("");
+  $("#caps").innerHTML = t.caps.map((c, i) => `
+    <div class="col"><div class="col-top"><span class="n">${esc(c.n)}</span><span class="col-ico">${ico((CAP_ICONS[state.track] || [])[i], 22)}</span></div><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p></div>`).join("");
   swapAnim($("#caps")); swapAnim($("#cycle"));
 }
 
@@ -158,6 +163,25 @@ function renderTools() {
   $("#methods").innerHTML = methods[state.track].map((m) => `<li>${esc(m)}</li>`).join("");
 }
 
+/* ---------- icon choices (names come from assets/js/icons.js) ---------- */
+const CYCLE_ICONS = {
+  cyber: ["scan-search", "filter", "search", "lock", "rotate-ccw", "trending-up"],
+  it: ["inbox", "stethoscope", "wrench", "circle-check", "file-text", "shield-check"],
+};
+const CAP_ICONS = {
+  cyber: ["scan-search", "siren", "shield-check"],
+  it: ["stethoscope", "wrench", "file-text"],
+};
+const PROJECT_ICONS = {
+  "ad-lab": "network", wazuh: "scan-eye", nessus: "scan-search", thm: "flag", "secure-ai": "bot",
+  "kali-lab": "terminal", malware: "bug", usb: "keyboard", helpdesk: "headset", automation: "workflow", ios: "smartphone",
+};
+
+/* ---------- logo tile (experience, education, certifications) ---------- */
+function logo(name) {
+  return name ? `<span class="logo" aria-hidden="true"><img src="assets/icons/${esc(name)}.svg" alt="" width="28" height="28" loading="lazy" decoding="async" onerror="this.parentNode.remove()" /></span>` : "";
+}
+
 /* ---------- experience ---------- */
 function renderExperience() {
   const t = tracks[state.track];
@@ -166,8 +190,8 @@ function renderExperience() {
     <li class="job">
       <div><span class="job-date">${esc(j.dates)}</span><span class="job-kind mono">${esc(j.kind)}</span></div>
       <div>
-        <h3>${esc(j.role)}</h3>
-        <p class="job-org">${esc(j.org)} <span>· ${esc(j.place)}</span></p>
+        <div class="head">${logo(j.logo)}<div><h3>${esc(j.role)}</h3>
+        <p class="job-org">${esc(j.org)} <span>· ${esc(j.place)}</span></p></div></div>
         <ul>${j.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
       </div>
       <div class="job-stat"><b>${esc(j.stat[0])}</b><span>${esc(j.stat[1])}</span></div>
@@ -184,11 +208,11 @@ function renderAbout() {
 /* ---------- education + certifications ---------- */
 function renderCreds() {
   $("#education").innerHTML = education.map((e) => `
-    <li class="reveal"><b>${esc(e.degree)}</b><p class="school">${esc(e.school)}</p><p class="note">${esc(e.note)}</p>
+    <li class="reveal"><div class="head">${logo(e.logo)}<div><b>${esc(e.degree)}</b><p class="school">${esc(e.school)}</p></div></div><p class="note">${esc(e.note)}</p>
     <div class="row"><span class="pill on">${esc(e.dates)}</span>${e.extra ? `<span class="pill">${esc(e.extra)}</span>` : ""}</div></li>`).join("");
   $("#creds").innerHTML = credentials.map((c) => `
     <div class="cred reveal">
-      <div class="cred-top"><span class="cred-issuer">${esc(c.issuer.toUpperCase())}</span><span class="pill ${c.earned ? "on" : ""}">${esc(c.status)}</span></div>
+      <div class="cred-top"><span class="cred-issuer">${logo(c.logo)}${esc(c.issuer.toUpperCase())}</span><span class="pill ${c.earned ? "on" : ""}">${esc(c.status)}</span></div>
       <h3>${esc(c.name)}</h3><p class="cred-area">${esc(c.area)}</p>
     </div>`).join("");
 }
