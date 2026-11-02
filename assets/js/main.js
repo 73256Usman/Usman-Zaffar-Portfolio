@@ -1,10 +1,10 @@
 import {
   profile, tracks, projects, filters, toolkit, methods, toolFilters,
   experience, education, bio, aboutTitle, credentials,
-} from "./data.js?v=202610312359";
-import { ico } from "./icons.js?v=202610312359";
-import { initScene } from "./scene.js?v=202610312359";
-import { initExtras, countUp } from "./extras.js?v=202610312359";
+} from "./data.js?v=202611021847";
+import { ico } from "./icons.js?v=202611021847";
+import { initScene } from "./scene.js?v=202611021847";
+import { initExtras, countUp } from "./extras.js?v=202611021847";
 
 const ghost = document.createElement("div"); // stands in for any element missing from the HTML, so one mismatch can never blank the page
 const $ = (s, r = document) => r.querySelector(s) || ghost;
@@ -18,10 +18,16 @@ const store = {
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-const state = { track: "cyber", workFilter: "All work", toolFilter: "All tools", toolQuery: "" };
+const DEFAULT_TRACK = "iam";
+const TRACK_NAMES = { iam: "IAM", it: "IT" };
+const state = { track: DEFAULT_TRACK, workFilter: "All work", toolFilter: "All tools", toolQuery: "" };
 
 /* ---------- helpers ---------- */
-function showFor(item) { return item.track === "both" || item.track === state.track; }
+// "tracks" can be "both" (every view), one view name, or a list of view names
+function inTrack(spec, track = state.track) { return spec === "both" || (Array.isArray(spec) ? spec.includes(track) : spec === track); }
+function showFor(item) { return inTrack(item.track); }
+// a job field can be a plain value or an object with one key per view plus "default"
+function pick(v) { return v && typeof v === "object" && !Array.isArray(v) ? (v[state.track] ?? v.default) : v; }
 function toast(msg) {
   const t = $("#toast");
   t.textContent = msg;
@@ -51,7 +57,7 @@ function initLinks() {
 }
 
 /* ---------- resume files (buttons appear only if the PDFs exist) ---------- */
-const resumeOk = { cyber: false, it: false };
+const resumeOk = { iam: false, it: false };
 const probed = {};
 async function probeResume(k) {
   if (probed[k]) return;
@@ -66,7 +72,7 @@ async function probeResume(k) {
 function renderResume() {
   const url = profile.resumes[state.track];
   const ok = resumeOk[state.track];
-  const label = state.track === "cyber" ? "Cybersecurity resume" : "IT resume";
+  const label = { iam: "IAM resume", it: "IT resume" }[state.track] || "resume";
   for (const id of ["#cvTop", "#cvHero"]) {
     const a = $(id);
     a.hidden = !ok;
@@ -87,9 +93,9 @@ function renderHero() {
   const t = tracks[state.track];
   $("#promptText").textContent = t.prompt;
   $("#tagline").textContent = t.tagline;
-  $("#intro").textContent = profile.intro;
+  $("#intro").textContent = t.intro || profile.intro;
   $("#badge").textContent = t.badge || profile.badge;
-  $("#facts").innerHTML = profile.facts.map(([k, a, b]) =>
+  $("#facts").innerHTML = (t.facts || profile.facts).map(([k, a, b]) =>
     `<li><span class="fact-k mono">${esc(k)}</span><b>${esc(a)}</b><span class="fact-s">${esc(b)}</span></li>`).join("");
   $("#strip").innerHTML = t.strip.map((x) => `<li>${esc(x)}</li>`).join("");
   ["#badge", "#strip"].forEach((x) => swapAnim($(x)));
@@ -170,7 +176,7 @@ function renderToolFilters() {
 }
 function renderTools() {
   const q = state.toolQuery.trim().toLowerCase();
-  const mine = toolkit.filter(([, , tr]) => tr === "both" || tr === state.track);
+  const mine = toolkit.filter(([, , tr]) => inTrack(tr));
   const match = ([n, g]) => (state.toolFilter === "All tools" || g === state.toolFilter) &&
     (!q || n.toLowerCase().includes(q) || g.toLowerCase().includes(q));
   const count = mine.filter(match).length;
@@ -187,16 +193,16 @@ function renderTools() {
 
 /* ---------- icon choices (names come from assets/js/icons.js) ---------- */
 const CYCLE_ICONS = {
-  cyber: ["scan-search", "filter", "search", "lock", "rotate-ccw", "trending-up"],
+  iam: ["inbox", "user-check", "lock", "clipboard-check", "wrench", "rotate-ccw"],
   it: ["inbox", "stethoscope", "wrench", "circle-check", "file-text", "shield-check"],
 };
 const CAP_ICONS = {
-  cyber: ["scan-search", "siren", "shield-check"],
+  iam: ["user-check", "key-round", "clipboard-check"],
   it: ["stethoscope", "wrench", "file-text"],
 };
 const PROJECT_ICONS = {
-  "ad-lab": "network", wazuh: "scan-eye", nessus: "scan-search", thm: "flag", "secure-ai": "bot",
-  "kali-lab": "terminal", malware: "bug", usb: "keyboard", helpdesk: "headset", automation: "workflow", ios: "smartphone",
+  "ad-lab": "network", wazuh: "scan-eye", helpdesk: "headset", automation: "workflow", ios: "smartphone",
+  "iam-entra": "shield-check", "iam-sso": "key-round", "iam-jml": "workflow", "iam-pam": "lock", "iam-review": "clipboard-check", "ios-auth": "smartphone",
 };
 
 /* ---------- logo tile (experience, education, certifications) ---------- */
@@ -208,16 +214,18 @@ function logo(name) {
 function renderExperience() {
   const t = tracks[state.track];
   $("#expTitle").textContent = t.expTitle;
-  $("#timeline").innerHTML = experience.map((j) => `
+  $("#timeline").innerHTML = experience.filter((j) => !j.only || j.only.includes(state.track)).map((j) => {
+    const stat = pick(j.stat);
+    return `
     <li class="job">
-      <div><span class="job-date">${esc(j.dates)}</span><span class="job-kind mono">${esc(j.kind)}</span></div>
+      <div><span class="job-date">${esc(j.dates)}</span><span class="job-kind mono">${esc(pick(j.kind))}</span></div>
       <div>
-        <div class="head">${logo(j.logo)}<div><h3>${esc(j.role)}</h3>
+        <div class="head">${logo(j.logo)}<div><h3>${esc(pick(j.role))}</h3>
         <p class="job-org">${esc(j.org)} <span>· ${esc(j.place)}</span></p></div></div>
-        <ul>${j.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+        <ul>${pick(j.bullets).map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
       </div>
-      <div class="job-stat"><b>${esc(j.stat[0])}</b><span>${esc(j.stat[1])}</span></div>
-    </li>`).join("");
+      <div class="job-stat"><b>${esc(stat[0])}</b><span>${esc(stat[1])}</span></div>
+    </li>`; }).join("");
   swapAnim($("#timeline"));
   $$(".job-stat b").forEach(countUp);
 }
@@ -225,7 +233,7 @@ function renderExperience() {
 /* ---------- about ---------- */
 function renderAbout() {
   $("#aboutTitle").textContent = aboutTitle;
-  $("#bio").innerHTML = bio.map((p) => `<p>${esc(p)}</p>`).join("");
+  $("#bio").innerHTML = (bio[state.track] || bio.default).map((p) => `<p>${esc(p)}</p>`).join("");
   // optional photo: shown only if the file exists
   if (!profile.photo) return;
   const probe = new Image();
@@ -251,12 +259,12 @@ function renderCreds() {
 function renderContact() {
   const t = tracks[state.track];
   $("#contactTitle").textContent = t.contactTitle;
-  $("#contactLine").textContent = profile.contactLine;
+  $("#contactLine").textContent = t.contactLine || profile.contactLine;
 }
 
 /* ---------- track switching ---------- */
 function setTrack(next, { initial = false } = {}) {
-  if (!tracks[next]) next = "cyber";
+  if (!tracks[next]) next = DEFAULT_TRACK;
   state.track = next;
   root.dataset.track = next;
   store.set("track", next);
@@ -283,8 +291,8 @@ function initPalette() {
     q = q.trim().toLowerCase();
     items = [
       ...sections.map(([n, h]) => ({ label: n, hint: "Section", run: () => { location.hash = h; } })),
-      ...projects.map((p) => ({ label: p.title, hint: p.track === "both" ? "Project" : `Project · ${p.track === "cyber" ? "Cyber" : "IT"}`, run: () => openProject(p) })),
-      { label: "Switch to Cyber view", hint: "Track", run: () => setTrack("cyber") },
+      ...projects.map((p) => ({ label: p.title, hint: p.track === "both" ? "Project" : `Project · ${[].concat(p.track).map((x) => TRACK_NAMES[x]).join(" / ")}`, run: () => openProject(p) })),
+      { label: "Switch to IAM view", hint: "Track", run: () => setTrack("iam") },
       { label: "Switch to IT view", hint: "Track", run: () => setTrack("it") },
     ].filter((i) => !q || i.label.toLowerCase().includes(q) || i.hint.toLowerCase().includes(q));
     sel = 0; paint();
@@ -312,7 +320,7 @@ function initPalette() {
   pal.addEventListener("click", (e) => { if (e.target === pal) close(); });
 }
 function openProject(p) {
-  if (p.track !== "both" && p.track !== state.track) setTrack(p.track);
+  if (!inTrack(p.track)) setTrack([].concat(p.track)[0]);
   showProject(p, $(`#card-${p.id} .card-head`));
 }
 
@@ -387,7 +395,7 @@ function safe(label, fn) { try { fn(); } catch (err) { console.error(`[portfolio
 safe("links", initLinks);
 safe("credentials", renderCreds);
 const urlTrack = new URLSearchParams(location.search).get("track");
-safe("content", () => setTrack(tracks[urlTrack] ? urlTrack : store.get("track") || "cyber", { initial: true }));
+safe("content", () => setTrack(tracks[urlTrack] ? urlTrack : store.get("track") || DEFAULT_TRACK, { initial: true }));
 safe("events", bindEvents);
 safe("palette", initPalette);
 safe("extras", () => initExtras({ getTrack: () => state.track, openProject: (id) => { const p = projects.find((x) => x.id === id); if (p) openProject(p); } }));

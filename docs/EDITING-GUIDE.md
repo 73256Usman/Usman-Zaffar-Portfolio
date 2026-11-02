@@ -19,13 +19,13 @@ Find `export const credentials` and add an entry:
 {
   name: "CompTIA CySA+",
   issuer: "CompTIA",
-  area: "Cybersecurity",
+  area: "Identity and access",
   status: "Earned",
   earned: true,
 },
 ```
 
-When you pass the Azure exam, find the AZ-900 entry and change `status: "Planned"` to `status: "Earned"` and `earned: false` to `earned: true`.
+When you pass the SC-300 exam, find the SC-300 entry and change `status: "In progress"` to `status: "Earned"` and `earned: false` to `earned: true`.
 
 Also update the snapshot tiles near the top of the site: in `profile`, edit the `facts` list (for example change "CompTIA Security+" to "Security+ and CySA+").
 
@@ -59,7 +59,7 @@ Find `export const projects` and copy one block.
   id: "my-new-lab",              // unique, no spaces
   title: "Project Name",
   meta: "Home lab",              // small line above the title
-  track: "cyber",                // "cyber", "it", or "both"
+  track: "iam",                  // "iam", "it", "both", or a list like ["iam", "it"]
   tags: ["Blue team"],           // must match a filter name (see below)
   flow: ["Step one", "Step two", "Step three", "Step four"],
   summary: "One plain sentence anyone can understand.",
@@ -106,14 +106,14 @@ Remove usernames, IP addresses and anything private before adding a screenshot. 
 
 ## Lab map and example walkthrough
 
-Both live in `assets/js/extras.js`. The lab map text is in the `LABS` object (one version for Cyber, one for IT). Each box has a name, a short line, a description, tools and the project it links to. The walkthrough text is in the `WALK` object. It is a made up example, and the page says so. Keep it that way so nobody mistakes it for a real incident.
+Both live in `assets/js/extras.js`. The lab map text is in the `LABS` object (one version for IAM, one for IT). Each box has a name, a short line, a description, tools and the project it links to. The walkthrough text is in the `WALK` object. It is a made up example, and the page says so. Keep it that way so nobody mistakes it for a real incident.
 
 ## 5. Add a tool and its icon
 
 Find `export const toolkit`. Each line is `[name, group, track, icon]`:
 
 ```js
-["Splunk", "Detection", "cyber", "scan"],
+["Splunk", "Detection", "iam", "scan"],
 ```
 
 - Groups must match the names in `toolFilters` (Detection, Offensive, Training, Systems, Support, Scripting, Dev and AI).
@@ -130,7 +130,7 @@ Other free icon sources: https://lucide.dev (simple line icons) and https://devi
 
 ## 6. Change the key skills chips
 
-Find `export const methods`. There is one list for `cyber` and one for `it`. Keep each chip short. Use the same words that appear in job postings, since recruiters and applicant tracking systems search for them.
+Find `export const methods`. There is one list for `iam` and one for `it`. Keep each chip short. Use the same words that appear in job postings, since recruiters and applicant tracking systems search for them.
 
 ## 7. Change the main summary or snapshot tiles
 
@@ -148,12 +148,12 @@ Find `export const bio`. Each string in the list is one paragraph. Two short par
 
 ## 9. Change the headings and process steps for each view
 
-Find `export const tracks`. The `cyber` and `it` blocks hold the tagline, the section headings, the strip of keywords under your name, and the process steps in "How I work" (`cycle` and `caps`).
+Find `export const tracks`. The `iam` and `it` blocks hold the tagline, the section headings, the strip of keywords under your name, and the process steps in "How I work" (`cycle` and `caps`).
 
 ## 10. Add or update resumes
 
 1. Export your resumes as PDF.
-2. Name them exactly `Usman-Zaffar-Cybersecurity-Resume.pdf` and `Usman-Zaffar-IT-Resume.pdf`.
+2. Name them exactly `Usman-Zaffar-IAM-Resume.pdf` and `Usman-Zaffar-IT-Resume.pdf`.
 3. Drop them in the `resume/` folder (replace the old ones).
 4. Publish. Buttons appear in the header, hero and contact section.
 
@@ -161,7 +161,7 @@ Find `export const tracks`. The `cyber` and `it` blocks hold the tagline, the se
 
 Open `assets/css/style.css`. At the top, in `:root`:
 
-- `--accent` is the highlight color for the Cyber view. `:root[data-track="it"]` right below it sets the IT view color.
+- `--accent` is the highlight color. The palette matches the LinkedIn cover: black, two greys and white.
 - `--bg`, `--surface` and `--text` control the dark theme.
 
 The 3D network colors are in `assets/js/scene.js` at `const COLORS`. Keep them matching the CSS accent colors.
@@ -197,7 +197,7 @@ bash publish.sh "Added CySA+ certification"
 
 ## Look and feel quick reference
 
-- **Colors:** the top of `assets/css/style.css` (`:root`). `--accent` is the Cyber color (ice blue) and the `:root[data-track="it"]` block below it is the IT color (teal).
+- **Colors:** the top of `assets/css/style.css` (`:root`). `--accent` is the highlight (light grey). Both views use the same black and grey palette.
 - **Fonts:** headlines use Barlow Condensed (`--display`), everything else uses Montserrat (`--sans`), and code-like bits use JetBrains Mono (`--mono`). All three are stored in `assets/fonts/`.
 - **Your photo:** put it at `assets/img/usman.jpg`. See `assets/img/README.md`.
 - **The line under your name ("Open to ...")** is `badge` for each view, in `tracks` inside `data.js`.

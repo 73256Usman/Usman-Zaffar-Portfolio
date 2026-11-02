@@ -6,9 +6,9 @@ For future you, or anyone helping you maintain it.
 
 A static site. The browser loads `index.html`, which loads `assets/css/style.css` and `assets/js/main.js`. `main.js` imports `data.js` (all content) and `scene.js` (the 3D hero). There is no server code and no build step.
 
-## The Cyber / IT switch
+## The IAM / IT switch
 
-- The current view is stored on the `<html>` element as `data-track="cyber"` or `"it"`. CSS reads it to change the accent color.
+- The current view is stored on the `<html>` element as `data-track="iam"` or `"it"`.
 - `setTrack()` in `main.js` re-renders every section from `data.js` for the chosen view and saves the choice in the browser's localStorage.
 - A link with `?track=it` at the end opens the IT view directly. Handy for putting different links on your two resumes.
 - Facts that are the same for both views (experience bullets, About, education, certifications) are stored once, so the two views never disagree. Only emphasis changes: which projects and tools show, the section headings, and the process steps.
@@ -21,7 +21,7 @@ A static site. The browser loads `index.html`, which loads `assets/css/style.css
 
 A Three.js network of 96 connected nodes with small data packets moving along the links.
 
-- Cyber view: random nodes flash red (an alert) then turn the accent color (contained), and a scan ring sweeps the network.
+- Both views: calm pulses travel along the network, in the grey palette.
 - IT view: the same network with calm pulses.
 - It starts only after the page has painted, pauses when scrolled out of view or when the tab is hidden, and releases the graphics context on refresh.
 - If WebGL is unavailable, or the visitor prefers reduced motion, the page falls back gracefully (a soft glow, or a still frame).

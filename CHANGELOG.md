@@ -2,6 +2,15 @@
 
 Keep a short note here each time you make a meaningful change. It helps future you remember what changed and why.
 
+## IAM view and black and grey colors
+
+- The Cyber view is now an **IAM view** (Identity and Access Management). The switch has two views: IAM and IT. The IT view is unchanged except for the new colors.
+- New IAM content: hero summary and facts, six IAM projects (Entra ID and Conditional Access, Okta SSO and API security, joiner-mover-leaver automation, privileged access, access review, iOS authentication), IAM skills and tools, the access lifecycle section with its example request, and an IAM lab map.
+- Work experience now has IAM wording for Geeks On Site, the iOS apps and Metro One. Each job field can be a plain value or one value per view.
+- Removed the Cyber only projects and tools (Nessus, TryHackMe, Kali, malware, USB research, secure AI agent) from the site.
+- Certification: AZ-900 replaced by SC-300 (in progress).
+- Colors now match the LinkedIn cover: black, light grey, mid grey and white. Updated the preview image, tab icons and manifest.
+
 ## Layout stability and hero sizing
 
 - Nothing on the page moves when you click. Project cards now open in a dialog instead of expanding in the grid, filters dim the cards and tools that do not match instead of removing them, and every lab map panel shares one fixed-size box.

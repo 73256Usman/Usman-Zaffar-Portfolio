@@ -1,7 +1,7 @@
 // Interactive extras: the lab map, the example walkthrough, the scroll progress bar and the view switch sweep.
 // Everything here is decoration or explanation. If any part fails, the rest of the site is unaffected.
 // To change the text of the lab map or the walkthrough, edit the LABS and WALK objects below.
-import { ico } from "./icons.js?v=202610312359";
+import { ico } from "./icons.js?v=202611021847";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -14,26 +14,26 @@ const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
    w = [x, y] node centre on the wide layout, t = same on the tall (phone) layout.
    ===================================================================== */
 const LABS = {
-  cyber: {
-    title: "How my labs connect.",
+  iam: {
+    title: "How my IAM lab connects.",
     intro: "Select a part to see what it does and which project it belongs to.",
-    wide: { vb: [760, 330], zones: [[10, 10, 470, 310, "ACTIVE DIRECTORY LAB"], [510, 10, 240, 310, "ISOLATED ATTACK LAB"]] },
-    tall: { vb: [360, 430], zones: [[8, 8, 344, 266, "ACTIVE DIRECTORY LAB"], [8, 292, 344, 130, "ISOLATED ATTACK LAB"]] },
+    wide: { vb: [760, 330], zones: [[10, 10, 470, 310, "ON-PREMISES"], [510, 10, 240, 310, "CLOUD IDENTITY"]] },
+    tall: { vb: [360, 430], zones: [[8, 8, 344, 266, "ON-PREMISES"], [8, 292, 344, 130, "CLOUD IDENTITY"]] },
     nodes: [
-      { id: "dc", name: "Domain controller", sub: "Windows Server · AD", icon: "server", w: [110, 100], t: [92, 88], project: "ad-lab",
-        text: "Runs the domain. I created users and groups here and used Group Policy to control how the workstations behave.", tools: ["Windows Server", "Active Directory", "Group Policy"] },
-      { id: "ws", name: "Workstations", sub: "Domain joined", icon: "laptop", w: [375, 100], t: [268, 88], project: "ad-lab",
-        text: "Windows machines joined to the domain. They are the endpoints that Wazuh watches and Nessus scans.", tools: ["Windows", "VirtualBox"] },
-      { id: "nessus", name: "Nessus", sub: "Vulnerability scans", icon: "scan-search", w: [110, 250], t: [92, 212], project: "nessus",
-        text: "Scans the lab for weaknesses. I fixed the findings, then scanned again to confirm they were closed.", tools: ["Nessus Essentials", "CVE / CVSS"] },
-      { id: "wazuh", name: "Wazuh", sub: "Monitoring and alerts", icon: "scan-eye", w: [375, 250], t: [268, 212], project: "wazuh",
-        text: "Agents on the workstations send logs here. I investigated the alerts and wrote custom rules for simulated attacks.", tools: ["Wazuh", "Detection rules"] },
-      { id: "kali", name: "Kali Linux", sub: "Attacker machine", icon: "terminal", w: [630, 100], t: [92, 366], project: "kali-lab",
-        text: "The attacker in a separate lab. I practiced scanning, exploitation, password testing and traffic analysis.", tools: ["Kali Linux", "Nmap", "Metasploit", "Hydra", "Wireshark"] },
-      { id: "targets", name: "Targets", sub: "Metasploitable2, DVWA", icon: "crosshair", w: [630, 250], t: [268, 366], project: "kali-lab",
-        text: "Deliberately vulnerable machines to practice on. The network is isolated and I reset it with snapshots between runs.", tools: ["Metasploitable2", "DVWA", "VirtualBox"] },
+      { id: "ad", name: "Active Directory", sub: "Users and groups", icon: "server", w: [110, 100], t: [92, 88], project: "iam-jml",
+        text: "The on-premises directory. Fake employees sit in OUs by department and are mapped to role groups.", tools: ["Active Directory", "Windows Server", "Group Policy"] },
+      { id: "jml", name: "JML script", sub: "Joiner, mover, leaver", icon: "workflow", w: [375, 100], t: [268, 88], project: "iam-jml",
+        text: "Reads an HR file and creates, changes or disables accounts. It has a dry run mode, runs safely twice and writes an audit log.", tools: ["PowerShell", "RBAC"] },
+      { id: "pam", name: "Privileged access", sub: "LAPS, JIT, Vault", icon: "lock", w: [110, 250], t: [92, 212], project: "iam-pam",
+        text: "Separate admin accounts, rotating local admin passwords, access that expires on its own and a vault that enforces least privilege.", tools: ["Windows LAPS", "HashiCorp Vault"] },
+      { id: "review", name: "Access review", sub: "Findings and tickets", icon: "clipboard-check", w: [375, 250], t: [268, 212], project: "iam-review",
+        text: "A script flags orphaned and dormant accounts, excess privilege and separation of duties conflicts. Each one gets fixed and tracked.", tools: ["PowerShell", "ServiceNow", "Power BI"] },
+      { id: "entra", name: "Entra ID", sub: "MFA and Conditional Access", icon: "shield-check", w: [630, 100], t: [92, 366], project: "iam-entra",
+        text: "Users sync up from Active Directory. MFA and four Conditional Access policies decide who can sign in and from where.", tools: ["Entra ID", "Entra Connect", "MFA"] },
+      { id: "okta", name: "Okta", sub: "SSO and OAuth 2.0", icon: "key-round", w: [630, 250], t: [268, 366], project: "iam-sso",
+        text: "Single sign-on over SAML and OIDC, plus a test API that checks every token before it answers.", tools: ["Okta", "SAML", "OIDC", "OAuth 2.0"] },
     ],
-    links: [["ws", "dc", "sign in"], ["ws", "wazuh", "logs"], ["nessus", "ws", "scans"], ["kali", "targets", "attacks"]],
+    links: [["ad", "jml", "accounts"], ["ad", "pam", "admin"], ["jml", "review", "audit"], ["ad", "entra", "sync"], ["entra", "okta", "sign in"]],
   },
   it: {
     title: "My Windows lab.",
@@ -54,7 +54,7 @@ const LABS = {
   },
 };
 
-let labState = { track: "cyber", sel: null, openProject: () => {}, getTrack: () => "cyber" };
+let labState = { track: "iam", sel: null, openProject: () => {}, getTrack: () => "iam" };
 
 function nodeSvg(n, pos, wide, lay) {
   const [cx, cy] = pos, W = wide ? 170 : 160, H = 66, x = cx - W / 2, y = cy - H / 2;
@@ -147,16 +147,16 @@ function initLab(opts) {
    Made up scenarios that show the process. They are labelled as examples on the page.
    ===================================================================== */
 const WALK = {
-  cyber: {
-    head: "example-incident.log",
-    badge: "Lab scenario",
+  iam: {
+    head: "access-request-2041",
+    badge: "Example request",
     steps: [
-      ["Detect", "New", "09:14:02", "Alert: 12 failed logins for one user in 2 minutes."],
-      ["Triage", "Triaged", "09:14:40", "Source is inside the network and the account is real. Priority: high."],
-      ["Investigate", "Investigating", "09:19:15", "Logs show the attempts came from one workstation, followed by a successful login."],
-      ["Contain", "Contained", "09:26:48", "Disabled the account and isolated the workstation from the network."],
-      ["Recover", "Recovered", "09:52:30", "Reset the credentials, restored access and confirmed no other machines were affected."],
-      ["Improve", "Closed", "10:05:11", "Wrote the report and added a detection rule for repeated failed logins."],
+      ["Request", "Submitted", "09:02", "A new hire in Finance needs an account and access to the shared finance folder."],
+      ["Provision", "Created", "09:10", "Created the account in the Finance group with a temporary password and a forced change at first sign in."],
+      ["Authenticate", "MFA on", "09:18", "Registered the authenticator app and confirmed the first sign in with MFA."],
+      ["Review", "Approved", "09:30", "The manager approved the folder access. It matches the role and nothing extra was granted."],
+      ["Remediate", "Fixed", "09:41", "Found the account also in an old IT group copied from a template and removed it."],
+      ["Remove", "Closed", "10:00", "Logged every change. When this person leaves, the same record drives disabling the account."],
     ],
   },
   it: {
@@ -173,7 +173,7 @@ const WALK = {
   },
 };
 
-const walk = { track: "cyber", step: 5, timer: null, visible: false, hover: false, playing: true };
+const walk = { track: "iam", step: 5, timer: null, visible: false, hover: false, playing: true };
 
 function paintWalk() {
   const host = $("#walk"); if (!host) return;

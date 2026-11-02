@@ -1,8 +1,8 @@
-# Usman Zaffar | Cybersecurity & IT Portfolio
+# Usman Zaffar | Identity & Access Management Portfolio
 
 Live site: https://73256usman.github.io/Usman-Zaffar-Portfolio/
 
-A personal portfolio with a **Cyber / IT switch**. One person, one set of facts, two lenses. The switch changes what leads (projects, tools, the process section, the resume button), not who I am.
+A personal portfolio with an **IAM / IT switch**. One person, one set of facts, two lenses. The switch changes what leads (projects, tools, the process section, the resume button), not who I am.
 
 Everything is plain HTML, CSS and JavaScript. There is no build step and no framework, so it can be edited with any text editor and hosted for free on GitHub Pages.
 
@@ -24,12 +24,12 @@ Everything is plain HTML, CSS and JavaScript. There is no build step and no fram
 | Name, email, links, summary, quick facts | `assets/js/data.js` | `profile` |
 | A job or experience entry | `assets/js/data.js` | `experience` |
 | Degree or school | `assets/js/data.js` | `education` |
-| Certifications (add CySA+, SC-200, mark AZ-900 earned) | `assets/js/data.js` | `credentials` |
+| Certifications (mark SC-300 earned when you pass) | `assets/js/data.js` | `credentials` |
 | Projects and labs (and their links) | `assets/js/data.js` | `projects` |
 | Tools and their icons | `assets/js/data.js` and `assets/icons/` | `toolkit` |
 | Key skills chips | `assets/js/data.js` | `methods` |
 | About text | `assets/js/data.js` | `bio` |
-| Cyber / IT headings and the process steps | `assets/js/data.js` | `tracks` |
+| IAM / IT headings and the process steps | `assets/js/data.js` | `tracks` |
 | Resume PDFs | `resume/` folder | file names below |
 | Colors, fonts, spacing | `assets/css/style.css` | `:root` at the top |
 | Page structure and section order | `index.html` | |
@@ -41,7 +41,7 @@ How the site works under the hood is in [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS
 
 Put your two PDFs in the `resume/` folder with these exact names:
 
-- `Usman-Zaffar-Cybersecurity-Resume.pdf`
+- `Usman-Zaffar-IAM-Resume.pdf`
 - `Usman-Zaffar-IT-Resume.pdf`
 
 The download buttons appear on their own once the files exist. Until then they stay hidden.

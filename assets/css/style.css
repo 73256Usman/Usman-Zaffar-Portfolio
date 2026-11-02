@@ -8,18 +8,19 @@
 @font-face { font-family: "JetBrains Mono"; font-weight: 500; font-display: swap; src: url("../fonts/jetbrains-mono-latin-500-normal.woff2") format("woff2"); }
 
 :root {
-  --bg: #060a12;
-  --bg-alt: #080e19;
-  --surface: #0c1320;
-  --surface-2: #121b2c;
-  --line: #19243a;
-  --line-strong: #263652;
-  --text: #e8eef8;
-  --dim: #9eacc2;
-  --faint: #708097;
-  --accent: #8cc4ff;
-  --accent-ink: #06142a;
-  --accent-soft: rgba(140, 196, 255, 0.1);
+  /* Palette matches the LinkedIn cover: black, two greys and white */
+  --bg: #000000;
+  --bg-alt: #080808;
+  --surface: #101010;
+  --surface-2: #171717;
+  --line: #262626;
+  --line-strong: #3c3c3c;
+  --text: #f4f4f4;
+  --dim: #b4b4b4;
+  --faint: #969696;
+  --accent: #dadada;
+  --accent-ink: #000000;
+  --accent-soft: rgba(218, 218, 218, 0.1);
   --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
   --sans: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -30,11 +31,6 @@
   --globe: clamp(320px, min(40vw, 60vh), 540px);
 }
 
-:root[data-track="it"] {
-  --accent: #7fe0cf;
-  --accent-ink: #072019;
-  --accent-soft: rgba(127, 224, 207, 0.1);
-}
 
 html.ready { scroll-behavior: smooth; }
 *, *::before, *::after { box-sizing: border-box; }
@@ -331,7 +327,7 @@ h2 { font-family: var(--display); text-transform: uppercase; font-size: clamp(42
 .footer-right a:hover { color: var(--accent); }
 
 /* Palette + toast */
-.palette { position: fixed; inset: 0; z-index: 90; display: grid; justify-items: center; align-items: start; padding: 14vh 16px 0; background: rgba(5, 7, 6, 0.7); backdrop-filter: blur(6px); }
+.palette { position: fixed; inset: 0; z-index: 90; display: grid; justify-items: center; align-items: start; padding: 14vh 16px 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(6px); }
 .palette[hidden] { display: none; }
 .palette-box { width: min(560px, 100%); background: var(--surface); border: 1px solid var(--line-strong); border-radius: 12px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
 .palette-box input { width: 100%; height: 56px; padding: 0 20px; background: transparent; border: 0; border-bottom: 1px solid var(--line); color: var(--text); font-family: var(--sans); font-size: 17px; }
@@ -539,8 +535,7 @@ h2 { font-family: var(--display); text-transform: uppercase; font-size: clamp(42
 
 /* ---------- Navy look: cleaner background, no cursor glow or grain ---------- */
 .grain, .glow { display: none; }
-.hero { background: radial-gradient(900px 620px at calc(100% - var(--edge) - var(--globe) / 2) 42%, rgba(52, 112, 196, 0.24), transparent 66%), radial-gradient(760px 520px at 0% 100%, rgba(22, 52, 104, 0.3), transparent 72%); }
-:root[data-track="it"] .hero { background: radial-gradient(900px 620px at calc(100% - var(--edge) - var(--globe) / 2) 42%, rgba(40, 150, 150, 0.2), transparent 66%), radial-gradient(760px 520px at 0% 100%, rgba(22, 70, 90, 0.3), transparent 72%); }
+.hero { background: radial-gradient(900px 620px at calc(100% - var(--edge) - var(--globe) / 2) 42%, rgba(218, 218, 218, 0.1), transparent 66%), radial-gradient(760px 520px at 0% 100%, rgba(150, 150, 150, 0.12), transparent 72%); }
 
 /* ---------- About photo (optional) ---------- */
 .about-body { margin-top: 24px; display: grid; gap: 28px; }
@@ -609,7 +604,7 @@ html.modal-open { overflow: hidden; }
 .card.dim, .tool.dim { opacity: 0.22; filter: saturate(0.4); pointer-events: none; transform: none; }
 .card, .tool { transition: transform 0.35s var(--ease), border-color 0.25s, background 0.25s, opacity 0.3s var(--ease), filter 0.3s var(--ease); }
 .proj-dialog { margin: auto; padding: 0; border: 1px solid var(--line-strong); border-radius: 16px; background: var(--surface); color: var(--text); width: min(960px, calc(100vw - 32px)); max-height: min(86vh, 860px); overflow: auto; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6); overscroll-behavior: contain; }
-.proj-dialog::backdrop { background: rgba(4, 8, 18, 0.72); backdrop-filter: blur(5px); }
+.proj-dialog::backdrop { background: rgba(0, 0, 0, 0.74); backdrop-filter: blur(5px); }
 .proj-dialog[open] { animation: pdin 0.35s var(--ease); }
 @keyframes pdin { from { opacity: 0; transform: translateY(14px) scale(0.985); } to { opacity: 1; transform: none; } }
 .pd-box { padding: 26px 28px 30px; }

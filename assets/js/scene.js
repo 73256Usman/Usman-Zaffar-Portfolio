@@ -1,6 +1,5 @@
 // Hero 3D scene: a rotating network topology.
-// Cyber view: alerts flash red, get contained, and a scan ring sweeps the network.
-// IT view: the same network runs calmly with soft pulses as issues are resolved.
+// IAM and IT views: the network runs calmly with soft pulses, in the grey palette.
 // Loaded lazily so the page still works if WebGL is unavailable.
 
 export async function initScene(canvas, fallback, hero) {
@@ -21,9 +20,9 @@ export async function initScene(canvas, fallback, hero) {
     const group = new THREE.Group();
     scene.add(group);
 
-    const COLORS = { cyber: 0x8cc4ff, it: 0x7fe0cf };
+    const COLORS = { iam: 0xdadada, it: 0xb8b8b8 };
     const ALERT = 0xff6b5e;
-    let track = document.documentElement.dataset.track === "it" ? "it" : "cyber";
+    let track = COLORS[document.documentElement.dataset.track] ? document.documentElement.dataset.track : "iam";
 
     /* ---------- textures ---------- */
     function canvasTex(draw) {
@@ -122,14 +121,8 @@ export async function initScene(canvas, fallback, hero) {
     let nextEvent = 1.5;
     function scheduleEvent(now) {
       const node = Math.floor(Math.random() * N);
-      if (track === "cyber") {
-        spawnPulse(node, ALERT);
-        queue.push({ at: now + 1.3, node, color: COLORS.cyber });
-        nextEvent = now + 3.2 + Math.random() * 1.6;
-      } else {
-        spawnPulse(node, COLORS.it);
-        nextEvent = now + 2.4 + Math.random() * 1.6;
-      }
+      spawnPulse(node, COLORS[track]);
+      nextEvent = now + 2.4 + Math.random() * 1.6;
     }
 
     /* ---------- scan ring (cyber only) ---------- */
@@ -137,14 +130,13 @@ export async function initScene(canvas, fallback, hero) {
     for (let i = 0; i <= 120; i++) { const a = (i / 120) * Math.PI * 2; scanPts.push(new THREE.Vector3(Math.cos(a), 0, Math.sin(a))); }
     const scanMat = new THREE.LineBasicMaterial({ color: COLORS[track], transparent: true, opacity: 0.55, depthWrite: false });
     const scan = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(scanPts), scanMat);
-    scan.visible = track === "cyber";
+    scan.visible = false;
     group.add(scan);
 
     function applyTrack(t) {
-      track = t === "it" ? "it" : "cyber";
+      track = COLORS[t] ? t : "iam";
       const c = COLORS[track];
       [lineMat, nodeMat, hubMat, innerMat, scanMat].forEach((m) => m.color.setHex(c));
-      scan.visible = track === "cyber";
     }
     addEventListener("trackchange", (e) => applyTrack(e.detail));
 
