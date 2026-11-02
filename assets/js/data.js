@@ -6,47 +6,37 @@ export const profile = {
   email: "732.usman@gmail.com",
   location: "Edison, NJ",
   intro:
-    "NJIT Information Technology senior with CompTIA Security+, nearly two years in security operations, and hands-on IT support experience.",
-  badge: "Open to work · Edison, NJ",
+    "Identity and access management (IAM) analyst with nearly 3 years of hands-on access management across physical access control, account support and SIEM monitoring. Hands on with Active Directory, Entra ID, Okta, MFA and single sign-on.",
+  badge: "Open to IAM analyst and administrator roles · Edison, NJ",
   photo: "assets/img/usman.jpg",
   photoAlt: "Portrait of Usman Zaffar",
   facts: [
     ["EDUCATION", "B.S. Information Technology", "NJIT · 3.8 GPA · Summer 2027"],
-    ["CERTIFICATION", "CompTIA Security+", "Earned"],
-    ["SECURITY", "Security Operations Analyst", "Metro One · 2023 to 2025"],
-    ["IT SUPPORT", "Level 2 IT Technician", "Geeks On Site · Current"],
+    ["CERTIFICATION", "CompTIA Security+", "SC-300 in progress"],
+    ["IAM SUPPORT", "Identity & Access Support Technician", "Geeks On Site · Current"],
+    ["ACCESS CONTROL", "Access Control Analyst", "Metro One · 2023 to 2025"],
   ],
-  contactLine:
-    "Open to SOC analyst, security analyst, help desk and IT support roles.",
+  contactLine: "Open to IAM analyst, identity administrator and access management roles.",
   github: "https://github.com/73256Usman",
   linkedin: "https://www.linkedin.com/in/usmanzaffar/",
   resumes: {
     iam: "resume/Usman-Zaffar-IAM-Resume.pdf",
-    it: "resume/Usman-Zaffar-IT-Resume.pdf",
+    it: "resume/Usman-Zaffar-IAM-Resume.pdf", // one resume for both views
   },
 };
 
-// Text that changes when the visitor flips the IAM / IT switch.
+// Emphasis that changes when the visitor flips the IAM / IT switch: tagline, projects, tools, key skills,
+// lab map and process steps. Job titles, experience, About, facts and contact text are the same in both views.
 export const tracks = {
   iam: {
     label: "IAM",
     prompt: "usman@portfolio:~$ whoami --track iam",
     tagline: "IDENTITY AND ACCESS MANAGEMENT",
-    intro:
-      "Identity and access management (IAM) analyst with nearly 3 years of hands-on access management across physical access control, account support, and SIEM monitoring. I work with Active Directory, Entra ID, Okta, MFA, single sign-on and role-based access control.",
-    facts: [
-      ["EDUCATION", "B.S. Information Technology", "NJIT · 3.8 GPA · Summer 2027"],
-      ["CERTIFICATION", "CompTIA Security+", "SC-300 in progress"],
-      ["IAM SUPPORT", "Identity & Access Support Technician", "Geeks On Site · Current"],
-      ["ACCESS CONTROL", "Access Control Analyst", "Metro One · 2023 to 2025"],
-    ],
-    contactLine: "Open to IAM analyst, identity administrator and access management roles.",
     pillars: [
       ["01 / AUTHENTICATE", "Prove who someone is."],
       ["02 / AUTHORIZE", "Give the right access, no more."],
       ["03 / GOVERN", "Review it, rotate it, remove it."],
     ],
-    badge: "Open to IAM analyst and administrator roles · Edison, NJ",
     strip: ["IAM", "ENTRA ID", "OKTA", "ACTIVE DIRECTORY"],
     workTitle: "Identity and access projects.",
     workIntro:
@@ -77,14 +67,13 @@ export const tracks = {
   it: {
     label: "IT",
     prompt: "usman@portfolio:~$ whoami --track it",
-    tagline: "IT SUPPORT AND SYSTEMS ADMINISTRATION",
+    tagline: "IAM BUILT ON IT SYSTEMS AND SUPPORT",
     pillars: [
       ["01 / SUPPORT", "Get people working again."],
       ["02 / ADMINISTER", "Users, devices and policy."],
       ["03 / AUTOMATE", "Script the repeat work."],
     ],
-    badge: "Open to help desk and IT support roles · Edison, NJ",
-    strip: ["HELP DESK", "WINDOWS", "MACOS", "ACTIVE DIRECTORY"],
+    strip: ["ACTIVE DIRECTORY", "WINDOWS", "MICROSOFT 365", "POWERSHELL"],
     workTitle: "IT projects and labs.",
     workIntro:
       "Labs and projects I have built and run myself. Open a card to see what I did.",
@@ -369,91 +358,52 @@ export const toolFilters = {
   it: ["All tools", "Systems", "Support", "Scripting", "Dev and AI"],
 };
 
-// Any field of a job (role, kind, stat, bullets) can be a plain value used by every view, or an object
-// with a key per view plus "default", for example  role: { iam: "...", default: "..." }.
-// Add  only: ["it"]  to hide a job from the other views.
 export const experience = [
   {
     id: "geeks",
     logo: "org-geeks",
     dates: "Nov 2025 to Present",
     kind: "Contract · 1099",
-    role: { iam: "Identity & Access Support Technician", default: "On-call IT Technician (Level 2)" },
+    role: "Identity & Access Support Technician",
     org: "Geeks On Site",
     place: "Client sites",
-    stat: { iam: ["About 30", "user accounts created"], default: ["4 to 5", "on-call jobs per week"] },
-    bullets: {
-      iam: [
-        "Create user accounts (about 30) in Active Directory and Microsoft 365, set permissions, and reset passwords for home and small business clients.",
-        "Set up Microsoft multi-factor authentication (MFA) and single sign-on (SSO) on client accounts, and secure routers and Wi-Fi.",
-        "Set up users, permissions and Group Policy in Active Directory for IT client firms, keeping accounts organized and secure.",
-        "Handle about 16 onsite client calls per month on Windows and macOS.",
-      ],
-      default: [
-        "Resolve 4 to 5 on-call service jobs a week for Windows and macOS clients.",
-        "Remove viruses and malware, install operating systems, and troubleshoot issues.",
-        "Work independently across a variety of client environments.",
-      ],
-    },
+    stat: ["About 30", "user accounts created"],
+    bullets: [
+      "Create user accounts (about 30) in Active Directory and Microsoft 365, set permissions, and reset passwords for home and small business clients.",
+      "Set up Microsoft multi-factor authentication (MFA) and single sign-on (SSO) on client accounts, and secure routers and Wi-Fi.",
+      "Set up users, permissions and Group Policy in Active Directory for IT client firms, keeping accounts organized and secure.",
+      "Handle about 16 onsite client calls per month on Windows and macOS.",
+    ],
   },
   {
     id: "ios-exp",
     logo: "org-ios",
     dates: "2025 to Present",
     kind: "Self-employed",
-    role: { iam: "Identity and Authentication iOS Developer", default: "Independent iOS App Developer" },
+    role: "Identity and Authentication iOS Developer",
     org: "Apple App Store",
     place: "Independent",
-    stat: { iam: ["2", "iOS apps published"], default: ["Multiple", "apps published"] },
-    bullets: {
-      iam: [
-        "Build and publish iOS apps with Sign in with Apple and Google OAuth login, backed by Supabase and a Linux server with security controls.",
-        "Enforce role-based access in the API on a need-to-know basis, so each user only gets the permissions they need.",
-        "Protect user data with Face ID biometric authentication using Apple's LocalAuthentication framework.",
-      ],
-      default: [
-        "Design, build and publish iOS apps independently.",
-        "Maintain the apps and release updates.",
-      ],
-    },
+    stat: ["2", "iOS apps published"],
+    bullets: [
+      "Build and publish iOS apps with Sign in with Apple and Google OAuth login, backed by Supabase and a Linux server with security controls.",
+      "Enforce role-based access in the API on a need-to-know basis, so each user only gets the permissions they need.",
+      "Protect user data with Face ID biometric authentication using Apple's LocalAuthentication framework.",
+    ],
   },
   {
     id: "metro",
     logo: "org-metro",
     dates: "Nov 2023 to Aug 2025",
-    kind: { iam: "Access control", default: "Security operations" },
-    role: { iam: "Access Control Analyst", default: "Security Operations Analyst" },
+    kind: "Access control",
+    role: "Access Control Analyst",
     org: "Metro One",
     place: "Edison, NJ · Amazon warehouse site",
     stat: ["150+", "access events per shift"],
-    bullets: {
-      iam: [
-        "Monitored 150+ access events per shift (door openings and badge swipes) across 4 entry points and vendor lanes at a site of 200+ employees.",
-        "Investigated alerts with SIEM notes and camera footage, reconstructed incidents from access logs, wrote incident reports, and escalated to the team.",
-        "Handled about 12 Tier 1 tickets per week, doing password resets and escalating account lockouts.",
-        "Created and issued 100+ pre-approved ID badges to onboarding workers, and trained 3+ new analysts on access monitoring.",
-      ],
-      default: [
-        "Monitored 150+ access events per shift across 4 entry points for a site of 200+ employees.",
-        "Investigated incidents using logs and surveillance data, wrote detailed reports, and escalated unusual activity per incident response procedures.",
-        "Trained new analysts on tools and SOPs and kept documentation current.",
-      ],
-    },
-  },
-  {
-    id: "mastercard",
-    only: ["it"],
-    logo: "org-mastercard",
-    dates: "Nov 2025",
-    kind: "Virtual job simulation · Forage",
-    role: "Cybersecurity Analyst Simulation",
-    org: "Mastercard",
-    place: "Online",
-    stat: ["Phishing", "analysis and response"],
     bullets: [
-      "Completed Mastercard's cybersecurity analyst job simulation.",
-      "Analyzed phishing emails and identified spoofed senders and risky user behavior.",
-      "Recommended containment steps such as credential resets and access reviews.",
+      "Monitored 150+ access events per shift (door openings and badge swipes) across 4 entry points and vendor lanes at a site of 200+ employees.",
+      "Investigated alerts with SIEM notes and camera footage, reconstructed incidents from access logs, wrote incident reports, and escalated to the team.",
+      "Handled about 12 Tier 1 tickets per week, doing password resets and escalating account lockouts.",
+      "Created and issued 100+ pre-approved ID badges to onboarding workers, and trained 3+ new analysts on access monitoring.",
     ],
   },
 ];
@@ -486,16 +436,10 @@ export const skillGroups = [
 
 export const aboutTitle = "About me.";
 
-export const bio = {
-  iam: [
-    "I'm an identity and access management analyst. For nearly three years I've worked on access: monitoring 150+ access events a shift at Metro One, issuing badges, handling password resets and lockouts, and now setting up accounts, MFA and single sign-on for clients at Geeks On Site.",
-    "At home I built an identity lab with Active Directory, Entra ID and Okta that covers MFA, Conditional Access, SSO, joiner-mover-leaver automation, privileged access and access reviews. I hold CompTIA Security+, I'm working toward Microsoft's SC-300 identity and access certification, and I'm a senior at NJIT studying Information Technology.",
-  ],
-  default: [
-    "I'm a senior at NJIT studying Information Technology, and I hold CompTIA Security+. I've worked in security operations and in hands-on IT support, and I'm looking for a role that uses both.",
-    "At Metro One I monitored access and investigated incidents at a busy warehouse. Right now I work on call as a Level 2 technician and build iOS apps on my own. At home I run labs for Active Directory, Wazuh, Nessus and AI agent security.",
-  ],
-};
+export const bio = [
+  "I'm an identity and access management analyst. For nearly three years I've worked on access: monitoring 150+ access events a shift at Metro One, issuing badges, handling password resets and lockouts, and now setting up accounts, MFA and single sign-on for clients at Geeks On Site.",
+  "At home I built an identity lab with Active Directory, Entra ID and Okta that covers MFA, Conditional Access, SSO, joiner-mover-leaver automation, privileged access and access reviews. I hold CompTIA Security+, I'm working toward Microsoft's SC-300 identity and access certification, and I'm a senior at NJIT studying Information Technology.",
+];
 
 export const credentials = [
   {

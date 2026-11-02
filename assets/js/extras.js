@@ -1,7 +1,7 @@
 // Interactive extras: the lab map, the example walkthrough, the scroll progress bar and the view switch sweep.
 // Everything here is decoration or explanation. If any part fails, the rest of the site is unaffected.
 // To change the text of the lab map or the walkthrough, edit the LABS and WALK objects below.
-import { ico } from "./icons.js?v=202611021847";
+import { ico } from "./icons.js?v=202611021853";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];

@@ -1,10 +1,10 @@
 import {
   profile, tracks, projects, filters, toolkit, methods, toolFilters,
   experience, education, bio, aboutTitle, credentials,
-} from "./data.js?v=202611021847";
-import { ico } from "./icons.js?v=202611021847";
-import { initScene } from "./scene.js?v=202611021847";
-import { initExtras, countUp } from "./extras.js?v=202611021847";
+} from "./data.js?v=202611021853";
+import { ico } from "./icons.js?v=202611021853";
+import { initScene } from "./scene.js?v=202611021853";
+import { initExtras, countUp } from "./extras.js?v=202611021853";
 
 const ghost = document.createElement("div"); // stands in for any element missing from the HTML, so one mismatch can never blank the page
 const $ = (s, r = document) => r.querySelector(s) || ghost;
@@ -72,7 +72,7 @@ async function probeResume(k) {
 function renderResume() {
   const url = profile.resumes[state.track];
   const ok = resumeOk[state.track];
-  const label = { iam: "IAM resume", it: "IT resume" }[state.track] || "resume";
+  const label = "IAM resume";
   for (const id of ["#cvTop", "#cvHero"]) {
     const a = $(id);
     a.hidden = !ok;
@@ -233,7 +233,7 @@ function renderExperience() {
 /* ---------- about ---------- */
 function renderAbout() {
   $("#aboutTitle").textContent = aboutTitle;
-  $("#bio").innerHTML = (bio[state.track] || bio.default).map((p) => `<p>${esc(p)}</p>`).join("");
+  $("#bio").innerHTML = bio.map((p) => `<p>${esc(p)}</p>`).join("");
   // optional photo: shown only if the file exists
   if (!profile.photo) return;
   const probe = new Image();
@@ -265,6 +265,9 @@ function renderContact() {
 /* ---------- track switching ---------- */
 function setTrack(next, { initial = false } = {}) {
   if (!tracks[next]) next = DEFAULT_TRACK;
+  // keep whatever is on screen where it is: content above the visible section can change height when the view changes
+  const anchor = initial ? null : $$("main > section").find((el) => { const r = el.getBoundingClientRect(); return r.top <= 100 && r.bottom > 100; });
+  const anchorTop = anchor ? anchor.getBoundingClientRect().top : 0;
   state.track = next;
   root.dataset.track = next;
   store.set("track", next);
@@ -274,6 +277,7 @@ function setTrack(next, { initial = false } = {}) {
   renderTools(); renderExperience(); renderAbout(); renderContact(); renderResume();
   probeResume(next);
   window.dispatchEvent(new CustomEvent("trackchange", { detail: next }));
+  if (anchor) { const shift = anchor.getBoundingClientRect().top - anchorTop; if (Math.abs(shift) > 1) scrollBy({ top: shift, behavior: "instant" }); }
   if (!initial) {
     const url = new URL(location.href);
     url.searchParams.set("track", next);
